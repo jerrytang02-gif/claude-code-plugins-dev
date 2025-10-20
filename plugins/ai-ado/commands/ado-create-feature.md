@@ -1,0 +1,164 @@
+# Create Azure DevOps Feature
+
+Interactively create a new Feature work item in Azure DevOps using the organization's configured conventions and guidelines.
+
+## Instructions
+
+This command creates a Feature work item following the organization's Azure DevOps conventions defined in CLAUDE.md.
+
+### Phase 1: Validate Azure DevOps Configuration
+
+Before proceeding with feature creation, verify that Azure DevOps configuration exists:
+
+1. Use the **Read tool** to read `CLAUDE.md` from the project root
+2. If the file doesn't exist OR doesn't contain an "## Azure DevOps" section:
+   - Display the following error message:
+     ```
+     ❌ Azure DevOps configuration not found
+
+     CLAUDE.md does not contain Azure DevOps configuration.
+
+     Please run /ado-init first to configure Azure DevOps settings for this project.
+
+     The /ado-init command will:
+     - Configure your organization, project, and team
+     - Set up Area Path and Iteration Path defaults
+     - Define naming conventions and work item guidelines
+     - Optionally configure the Azure DevOps MCP server
+     ```
+   - **STOP** and do not proceed further
+
+3. If Azure DevOps section exists:
+   - Parse the CLAUDE.md content to extract configuration values:
+     - Organization name (look for text after 'specify the organization as "')
+     - Project name (look for text after 'the project as "')
+     - Team name (look for text after 'the team as "')
+     - Area Path (look for text after 'Area Path" set to "')
+     - Iteration Path (look for text after 'Iteration Path" set to "')
+     - Naming convention preference (check if "Use decimal notation" or "Use descriptive" appears in naming section)
+   - Store these values for use in feature creation
+   - Proceed to Phase 2
+
+**IMPORTANT**:
+- Use **Read tool** to check CLAUDE.md - DO NOT use bash commands
+- The entire command should STOP if Azure DevOps configuration is not found
+- Do not prompt the user for configuration values - they must run /ado-init first
+
+### Phase 2: Gather Feature Information
+
+Collect feature details from the user in a sequential flow. Ask for each value and wait for the user's response before proceeding to the next.
+
+**Step 1 - Feature Title:**
+
+Simply output the following text as your response message and STOP (DO NOT call any tools):
+
+"What is the title for this Feature?
+
+(Based on your naming convention, use an appropriate format. For decimal notation, use: '1: Feature Name', '2: Feature Name', etc.)"
+
+Wait for the user's next message with the feature title before proceeding.
+
+**Step 2 - Feature Description:**
+
+After receiving the feature title, simply output the following text as your response message and STOP (DO NOT call any tools):
+
+"What is the high-level description for this Feature?
+
+(Provide a summary of the feature's purpose and the user stories it will contain. This should be an overview without fine details.)"
+
+Wait for the user's next message with the feature description before proceeding.
+
+**IMPORTANT**:
+- Simply output the question text in your response message and STOP - do NOT call ANY tools
+- DO NOT use the AskUserQuestion tool for any of these steps
+- After outputting each question, wait for the user's next message before proceeding
+- Validate that title and description are provided (not empty)
+
+### Phase 3: Create Feature Work Item
+
+Using the configuration from Phase 1 and the information from Phase 2, create the feature work item:
+
+1. Format the description as HTML for proper Azure DevOps display:
+   - Wrap the description in `<p>` tags
+   - Convert line breaks to `<br/>` tags
+   - If the description contains bullet points (lines starting with `-` or `*`), wrap them in `<ul>` and `<li>` tags
+
+2. Use the **wit_create_work_item** MCP tool with the following parameters:
+   - `project`: Use the project name from Phase 1 configuration
+   - `workItemType`: "Feature"
+   - `fields`: Array containing these field objects:
+     - Title field: `{"name": "System.Title", "value": "[USER_PROVIDED_TITLE]"}`
+     - Description field: `{"name": "System.Description", "value": "[HTML_FORMATTED_DESCRIPTION]", "format": "Html"}`
+     - Area Path field: `{"name": "System.AreaPath", "value": "[AREA_PATH_FROM_CONFIG]"}`
+     - Iteration Path field: `{"name": "System.IterationPath", "value": "[ITERATION_PATH_FROM_CONFIG]"}`
+     - State field: `{"name": "System.State", "value": "New"}`
+
+3. Wait for the MCP tool response
+
+**IMPORTANT**:
+- Use the exact field names shown above (e.g., "System.Title", "System.Description")
+- Ensure HTML formatting is applied to the description for readability
+- Use configuration values from Phase 1, not hardcoded values
+- The format parameter for Description must be "Html"
+
+### Phase 4: Display Success Message
+
+After successful feature creation, display a comprehensive success message:
+
+```
+✓ Feature created successfully!
+
+Feature Details:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 ID: [FEATURE_ID]
+📋 Title: [FEATURE_TITLE]
+📂 Project: [PROJECT_NAME]
+📍 Area Path: [AREA_PATH]
+🔄 Iteration Path: [ITERATION_PATH]
+✨ State: New
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Next Steps:
+1. Create User Stories under this Feature using /ado-create-story
+2. Review the feature in Azure DevOps web interface
+3. Add additional details or attachments as needed
+
+💡 To create a user story for this feature:
+   /ado-create-story
+   (You'll be prompted for parent Feature ID: [FEATURE_ID])
+
+🔗 View in Azure DevOps:
+   https://dev.azure.com/[ORGANIZATION]/[PROJECT]/_workitems/edit/[FEATURE_ID]
+```
+
+Replace placeholders with actual values from the created feature and configuration.
+
+### Important Constraints
+
+**DO NOT:**
+- Proceed without Azure DevOps configuration in CLAUDE.md
+- Use bash commands for file operations
+- Create the feature without user-provided title and description
+- Use placeholder or empty values
+- Call tools during Steps 1-2 (questions should be simple text output)
+
+**DO:**
+- Use **Read tool** to check CLAUDE.md for Azure DevOps configuration
+- Simply output question text and STOP for Steps 1-2 (no tool calls)
+- Wait for user's response after each question before proceeding
+- Use **wit_create_work_item** MCP tool to create the feature
+- Apply proper HTML formatting to description field
+- Use configuration values from CLAUDE.md
+- Show clear success message with feature details
+- Provide helpful next steps and links
+
+### Error Handling
+
+If the MCP tool returns an error:
+- Display the error message to the user
+- Suggest possible solutions:
+  - Verify Azure DevOps MCP server is configured and running
+  - Check that project and team names are correct
+  - Ensure user has permissions to create work items
+  - Verify Node.js 20+ is installed for MCP server
+- Recommend running /ado-init if configuration seems incorrect

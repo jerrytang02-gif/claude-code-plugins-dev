@@ -7,6 +7,72 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-10-20
+
+### Added
+
+#### AI-Git Plugin (v1.1.0)
+
+- `/git-init` command for automated .gitignore generation and management
+  - Intelligent technology detection (Node.js, Python, .NET, Go, Rust, PHP, Ruby, Java, Docker, React/Next.js, Vue, Terraform)
+  - Comprehensive ignore pattern generation (80+ patterns based on tech stack)
+  - Smart merge strategies for existing `.gitignore` files (Smart Merge, Append, Replace)
+  - Preview and confirmation workflow before making changes
+  - Base patterns for environment files, OS files, IDE files, and version control
+  - Technology-specific patterns for dependencies, build outputs, testing, and caching
+  - Lock file handling with user preference options
+  - Pattern deduplication and custom pattern preservation
+  - Organized sections with helpful comments
+
+#### AI-ADO Plugin (v1.0.0)
+
+- `/ado-init` command for Azure DevOps configuration and MCP server setup
+  - Interactive configuration collection for organization, project, team, area path, and iteration path
+  - Automatic CLAUDE.md configuration with Azure DevOps guidelines
+  - Work item hierarchy standards (Features → User Stories → Tasks)
+  - Naming convention support (decimal notation or descriptive names)
+  - Optional `.mcp.json` creation for Microsoft Azure DevOps MCP server integration
+  - Cross-platform support (Windows and Linux/Mac) with appropriate command configurations
+  - Authentication setup guidance with direct links to Azure DevOps MCP repository
+  - Personal Access Token (PAT) setup instructions for MCP server authentication
+  - Security-conscious: Shows manual configuration snippet if `.mcp.json` already exists
+  - Append-only strategy to prevent duplicate Azure DevOps sections
+
+- `/ado-create-feature` command for creating Feature work items
+  - Validates Azure DevOps configuration from CLAUDE.md before proceeding
+  - Interactive prompts for feature title and high-level description
+  - Automatic HTML formatting for description field with proper tags
+  - Applies organization defaults (Area Path, Iteration Path, State)
+  - Returns Feature ID with Azure DevOps web link for easy navigation
+  - Next steps guidance for creating child User Stories
+
+- `/ado-create-story` command for creating User Story work items
+  - Creates User Stories as children of existing Features
+  - Interactive prompts for parent Feature ID, title, persona statement, background, acceptance criteria, and story points
+  - Structured description format with persona statement, background section, and acceptance criteria
+  - Story Points estimation using Fibonacci sequence values
+  - HTML formatting for improved readability in Azure DevOps
+  - Given-When-Then format for acceptance criteria
+  - Returns User Story ID with next steps for creating child Tasks
+
+- `/ado-create-task` command for creating Task work items
+  - Creates Tasks as children of existing User Stories
+  - Interactive prompts for parent User Story ID, task title, and hour estimate
+  - Lightweight task descriptions that reference parent User Story
+  - Hour tracking with Original Estimate and Remaining Work fields
+  - Retrieves parent story details for contextual task description
+  - Returns Task ID with assignment and progress tracking guidance
+
+### Changed
+
+#### AI-Git Plugin (v1.1.0)
+
+- Renamed `/commit-push` command to `/git-commit-push` for consistency with `/git-init` naming convention
+
+#### AI-Plugins Plugin (v1.1.0)
+
+- Renamed `/scaffold-plugin` command to `/plugins-scaffold` for consistency with plugin naming convention
+
 ## [1.1.0] - 2025-10-19
 
 ### Added
@@ -37,7 +103,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### AI-Plugins Plugin (v1.0.0)
 
 - Initial release of AI-Plugins plugin for managing Claude Code plugins
-- Plugin management and discovery capabilities
+- `/scaffold-plugin` command for interactive plugin scaffolding (later renamed to `/plugins-scaffold`)
+  - Interactive plugin creation with AI assistance
+  - Automatic directory structure generation
+  - Metadata file generation (plugin.json)
+  - Command template creation
+  - Optional README and LICENSE generation
+  - Automatic marketplace registration
 
 ## [1.0.0] - 2025-10-17
 
@@ -52,7 +124,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### AI-Git Plugin (v1.0.0)
 
-- `/commit-push` command for automated git commit and push workflow
+- `/commit-push` command for automated git commit and push workflow (later renamed to `/git-commit-push`)
 - Intelligent commit message generation following repository conventions
 - Git status analysis and file staging
 - Automatic detection of conventional commit patterns
@@ -91,7 +163,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin installation and usage instructions
 - License information (MIT)
 
-[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/releases/tag/v1.0.0

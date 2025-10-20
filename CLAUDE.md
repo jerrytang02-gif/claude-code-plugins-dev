@@ -67,10 +67,10 @@ You can create a new plugin either manually or using the ai-plugins scaffolding 
 
 #### Option 1: Using the AI-Plugins Scaffolding Tool (Recommended)
 
-The ai-plugins plugin provides a `/scaffold-plugin` command that interactively creates a complete plugin structure:
+The ai-plugins plugin provides a `/plugins-scaffold` command that interactively creates a complete plugin structure:
 
 ```bash
-/scaffold-plugin
+/plugins-scaffold
 ```
 
 This will:
@@ -99,7 +99,7 @@ Commands are markdown files that provide instructions to Claude Code. They shoul
 - Include step-by-step instructions under an "## Instructions" section
 - Specify any important constraints or requirements (e.g., what NOT to include in outputs)
 
-Example from commit-push command (plugins/ai-git/commands/commit-push.md):
+Example from git-commit-push command (plugins/ai-git/commands/git-commit-push.md):
 ```
 IMPORTANT: Do not include the following in commit messages:
 - 🤖 Generated with [Claude Code](https://claude.com/claude-code)

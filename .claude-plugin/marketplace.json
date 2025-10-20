@@ -6,15 +6,15 @@
   },
   "metadata": {
     "description": "A curated list of custom Claude Code plugins, agents, and skills for developers.",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "pluginRoot": "./plugins"
   },
   "plugins": [
     {
       "name": "ai-git",
       "source": "./plugins/ai-git",
-      "description": "AI-powered git automation - Intelligent git commands and agents that streamline version control workflows",
-      "version": "1.0.0",
+      "description": "AI-powered git automation - Intelligent git commands and agents that streamline version control workflows with .gitignore generation",
+      "version": "1.1.0",
       "keywords": [
         "ai",
         "git",
@@ -76,7 +76,7 @@
       "name": "ai-plugins",
       "source": "./plugins/ai-plugins",
       "description": "AI-powered plugin development - Intelligent plugin scaffolding and generation tools for Claude Code",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "keywords": [
         "ai",
         "plugins",
@@ -86,6 +86,28 @@
         "automation",
         "productivity",
         "tools"
+      ],
+      "author": {
+        "name": "Charles Jones",
+        "url": "https://charlesjones.dev"
+      },
+      "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev"
+    },
+    {
+      "name": "ai-ado",
+      "source": "./plugins/ai-ado",
+      "description": "AI-powered Azure DevOps integration - Intelligent work item management, configuration, and automation for Azure DevOps workflows with MCP integration",
+      "version": "1.0.0",
+      "keywords": [
+        "ai",
+        "azure-devops",
+        "ado",
+        "devops",
+        "work-items",
+        "automation",
+        "productivity",
+        "mcp",
+        "integration"
       ],
       "author": {
         "name": "Charles Jones",

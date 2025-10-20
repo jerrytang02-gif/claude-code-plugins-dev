@@ -1,6 +1,6 @@
 {
   "name": "ai-plugins",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI-powered plugin development - Intelligent plugin scaffolding and generation tools for Claude Code",
   "author": {
     "name": "Charles Jones",

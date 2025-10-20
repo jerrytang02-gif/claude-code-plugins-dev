@@ -6,11 +6,34 @@
 
 ## 🎯 What This Plugin Does
 
-Provides a suite of AI-powered git commands that automate common git workflows, from commit generation to branch management and beyond.
+Provides a suite of AI-powered git commands that automate common git workflows, from .gitignore generation to commit automation and beyond.
 
 ## 📋 Available Commands
 
-### `/commit-push`
+### `/git-init`
+
+Initialize or update `.gitignore` with intelligent exclusion patterns based on your project's technology stack.
+
+**What it does:**
+
+- Detects technologies in your project (Node.js, Python, .NET, Go, Rust, PHP, Ruby, Java, Docker, etc.)
+- Generates comprehensive .gitignore patterns for detected technologies
+- Handles environment files, build artifacts, dependencies, OS files, and IDE files
+- Smart merge with existing .gitignore (preserves custom patterns and comments)
+- Organized sections with helpful comments
+
+**Usage:**
+
+```
+/git-init
+# ✨ AI detects your tech stack
+# ✨ Generates appropriate .gitignore patterns
+# ✨ Previews changes and asks for confirmation
+# ✨ Creates or updates .gitignore
+# ✅ Done!
+```
+
+### `/git-commit-push`
 
 Analyze changes, generate intelligent commit messages, and push to origin - all in one command.
 
@@ -28,14 +51,12 @@ git push
 **After (with ai-git plugin):**
 
 ```
-/commit-push
+/git-commit-push
 # ✨ AI analyzes your changes
 # ✨ Generates commit message matching your repo's style
 # ✨ Stages, commits, and pushes automatically
 # ✅ Done!
 ```
-
-_More AI-powered git commands and agents coming soon..._
 
 ---
 
@@ -53,7 +74,7 @@ _More AI-powered git commands and agents coming soon..._
 # Make your changes
 
 # Commit and push everything
-/commit-push
+/git-commit-push
 
 # That's it! AI handles the rest.
 ```
@@ -62,7 +83,7 @@ _More AI-powered git commands and agents coming soon..._
 
 ## 💡 Features
 
-### `/commit-push` Command
+### `/git-commit-push` Command
 
 #### Intelligent Analysis
 
@@ -164,7 +185,7 @@ Simplify error handling logic
 **Per commit workflow:**
 
 - Manual: ~2-3 minutes (review, write message, commit, push)
-- With commit-push: ~10 seconds (one command)
+- With git-commit-push: ~10 seconds (one command)
 
 **Estimated savings:**
 
@@ -183,9 +204,9 @@ No configuration needed! The plugin works out of the box and adapts to your repo
 ## 📦 Plugin Details
 
 - **Name:** AI-Git Plugin
-- **Version:** 1.0.0
+- **Version:** 1.1.0
 - **Type:** AI Instruction Plugin (Slash Commands & Agents)
-- **Commands:** `/commit-push` (more coming soon)
+- **Commands:** `/git-init`, `/git-commit-push`
 - **License:** MIT
 - **Author:** Charles Jones
 

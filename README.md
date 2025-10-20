@@ -10,10 +10,11 @@ This Claude Code plugin marketplace provides plugins that extend Claude Code's c
 
 | Plugin | Description | Commands | Agents | Skills | Version |
 |--------|-------------|----------|--------|--------|---------|
-| [ai-git](plugins/ai-git/) | AI-powered git automation and workflow streamlining | `/commit-push` | - | - | 1.0.0 |
-| [ai-security](plugins/ai-security/) | AI-powered security auditing with reproducible reports | `/security-init`, `/security-audit` | `security-auditor` | - | 1.1.0 |
+| [ai-ado](plugins/ai-ado/) | AI-powered Azure DevOps integration with MCP support | `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task` | - | - | 1.0.0 |
+| [ai-git](plugins/ai-git/) | AI-powered git automation and workflow streamlining | `/git-init`, `/git-commit-push` | - | - | 1.1.0 |
 | [ai-performance](plugins/ai-performance/) | AI-powered performance optimization and bottleneck detection | `/performance-audit` | `performance-optimizer` | - | 1.0.0 |
-| [ai-plugins](plugins/ai-plugins/) | AI-powered plugin scaffolding and generation tools | `/scaffold-plugin` | - | - | 1.0.0 |
+| [ai-plugins](plugins/ai-plugins/) | AI-powered plugin scaffolding and generation tools | `/plugins-scaffold` | - | - | 1.1.0 |
+| [ai-security](plugins/ai-security/) | AI-powered security auditing with reproducible reports | `/security-init`, `/security-audit` | `security-auditor` | - | 1.1.0 |
 
 ## 🚀 Quick Start
 
@@ -38,6 +39,7 @@ This Claude Code plugin marketplace provides plugins that extend Claude Code's c
 /plugin install <plugin-name>@claude-code-plugins-dev
 
 # Examples:
+/plugin install ai-ado@claude-code-plugins-dev
 /plugin install ai-git@claude-code-plugins-dev
 /plugin install ai-security@claude-code-plugins-dev
 ```
@@ -48,9 +50,9 @@ Once installed, plugins add slash commands directly to Claude Code. Use any comm
 
 ```bash
 # Examples:
-/commit-push           # AI-powered git commits
+/git-init              # Initialize .gitignore for project
 /security-init         # Initialize security settings
-/security-audit        # Comprehensive security analysis
+/ado-init              # Initialize Azure DevOps + MCP server configuration
 ```
 
 ## 📄 License

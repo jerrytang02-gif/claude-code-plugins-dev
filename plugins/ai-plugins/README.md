@@ -12,7 +12,7 @@ AI-powered plugin development tools for Claude Code. This plugin provides intell
 
 ## Available Commands
 
-### `/scaffold-plugin`
+### `/plugins-scaffold`
 
 Interactively scaffold a new Claude Code plugin with AI assistance.
 
@@ -27,7 +27,7 @@ Interactively scaffold a new Claude Code plugin with AI assistance.
 **Example usage:**
 
 ```bash
-/scaffold-plugin
+/plugins-scaffold
 ```
 
 **Interactive flow:**
@@ -62,13 +62,13 @@ This plugin is part of the claude-code-plugins-dev marketplace. To use it:
 
 1. Clone the marketplace repository
 2. The ai-plugins plugin will be available in your Claude Code instance
-3. Run `/scaffold-plugin` to create new plugins
+3. Run `/plugins-scaffold` to create new plugins
 
 ## Creating Your First Plugin
 
 1. Run the scaffold command:
    ```bash
-   /scaffold-plugin
+   /plugins-scaffold
    ```
 
 2. Answer the interactive questions:
@@ -110,7 +110,7 @@ Commands are markdown files that provide instructions to Claude Code. They shoul
 ### Simple Utility Plugin
 
 ```bash
-/scaffold-plugin
+/plugins-scaffold
 
 Name: file-organizer
 Description: AI-powered file organization and cleanup
@@ -122,7 +122,7 @@ Features: README with examples
 ### Multi-Command Development Plugin
 
 ```bash
-/scaffold-plugin
+/plugins-scaffold
 
 Name: api-tools
 Description: REST API development utilities
@@ -135,9 +135,9 @@ Features: README with examples, LICENSE file, Test command
 ## 📦 Plugin Details
 
 - **Name:** AI-Plugins
-- **Version:** 1.0.0
+- **Version:** 1.1.0
 - **Features:**
-  - Commands: `/scaffold-plugin`
+  - Commands: `/plugins-scaffold`
 - **License:** MIT
 - **Author:** Charles Jones
 
@@ -155,7 +155,7 @@ Features: README with examples, LICENSE file, Test command
 
 To improve this plugin:
 
-1. Review the command implementation in `commands/scaffold-plugin.md`
+1. Review the command implementation in `commands/plugins-scaffold.md`
 2. Suggest improvements or additional features
 3. Test with various plugin configurations
 4. Submit feedback or contributions

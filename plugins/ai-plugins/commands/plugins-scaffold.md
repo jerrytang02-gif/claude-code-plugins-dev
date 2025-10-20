@@ -167,7 +167,7 @@ After scaffolding is complete:
 ## Example Flow
 
 ```
-User runs: /scaffold-plugin
+User runs: /plugins-scaffold
 
 1. Ask questions about the plugin
 2. User answers:
