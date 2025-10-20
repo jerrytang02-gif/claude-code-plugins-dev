@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-10-19
+
+### Added
+
+#### AI-Security Plugin (v1.1.0)
+
+- `/security-init` command for automated security settings initialization
+  - Intelligent technology detection (Node.js, Python, .NET, Go, Rust, PHP, Ruby, Java, Docker)
+  - Comprehensive file denial pattern generation (40-60+ patterns based on tech stack)
+  - Smart merge strategies for existing `.claude/settings.json` configurations
+  - Preview and confirmation workflow before making changes
+  - Base security patterns for environment files, credentials, SSH keys, certificates, cloud configs, and database files
+  - Technology-specific patterns for build artifacts, cache directories, and dependency folders
+
+### Changed
+
+#### AI-Security Plugin (v1.1.0)
+
+- Enhanced `/security-audit` command with pre-audit configuration check
+  - Automatically detects if `.claude/settings.json` has proper file denial rules
+  - Warns users with fewer than 4 deny rules configured
+  - Recommends running `/security-init` before performing comprehensive security audits
+
 ## [1.0.1] - 2025-10-17
 
 ### Added
@@ -68,6 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin installation and usage instructions
 - License information (MIT)
 
-[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/releases/tag/v1.0.0

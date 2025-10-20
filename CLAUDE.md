@@ -49,6 +49,18 @@ Plugins can include:
 
 ## Development Workflow
 
+### Recommended Setup
+
+Before developing plugins in this repository, it's recommended to:
+
+1. **Initialize security settings** using the ai-security plugin:
+   ```bash
+   /security-init
+   ```
+   This configures `.claude/settings.json` to prevent Claude Code from reading sensitive files (credentials, secrets, build artifacts, etc.) based on your project's technology stack.
+
+   **Important**: Restart Claude Code after running this command for the settings to take effect.
+
 ### Adding a New Plugin
 
 You can create a new plugin either manually or using the ai-plugins scaffolding tool:
@@ -87,7 +99,7 @@ Commands are markdown files that provide instructions to Claude Code. They shoul
 - Include step-by-step instructions under an "## Instructions" section
 - Specify any important constraints or requirements (e.g., what NOT to include in outputs)
 
-Example from commit-push command (plugins/productivity/commit-push/commands/commit-push.md:22-24):
+Example from commit-push command (plugins/ai-git/commands/commit-push.md):
 ```
 IMPORTANT: Do not include the following in commit messages:
 - 🤖 Generated with [Claude Code](https://claude.com/claude-code)
@@ -114,3 +126,44 @@ Both should have matching:
 - version
 - description
 - author information
+
+### Plugin Versioning
+
+This repository follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html):
+- **MAJOR** (x.0.0): Breaking changes or incompatible API changes
+- **MINOR** (0.x.0): New features added in a backward-compatible manner
+- **PATCH** (0.0.x): Backward-compatible bug fixes
+
+#### Updating Plugin Versions
+
+When adding new features or fixing bugs in a plugin, follow this workflow:
+
+1. **Update Plugin Metadata** (`plugins/{plugin-name}/.claude-plugin/plugin.json`):
+   - Increment version number appropriately
+   - Update description if the functionality changed significantly
+
+2. **Update Marketplace Registry** (`.claude-plugin/marketplace.json`):
+   - Update the plugin's version in the plugins array
+   - Update the plugin's description to match plugin.json
+   - Increment marketplace metadata version if this is a significant update
+
+3. **Update CHANGELOG.md**:
+   - Add a new version section with the release date
+   - Document all added, changed, deprecated, removed, fixed, or security-related changes
+   - Follow Keep a Changelog format
+   - Update version comparison links at the bottom
+
+4. **Update README.md**:
+   - Update the plugin's version in the Available Plugins table
+   - Add any new commands to the Commands column
+   - Update usage examples if new commands were added
+
+5. **Update Plugin README** (`plugins/{plugin-name}/README.md`):
+   - Document new features, commands, or agents
+   - Update version in Plugin Details section
+   - Add usage examples for new functionality
+
+**Example:** When ai-security plugin added `/security-init` command:
+- Plugin version: 1.0.0 → 1.1.0 (new feature = minor bump)
+- Marketplace version: 1.0.1 → 1.1.0 (significant update)
+- Updated all 5 files listed above to maintain consistency

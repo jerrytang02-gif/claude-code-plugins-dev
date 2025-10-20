@@ -11,7 +11,7 @@ This Claude Code plugin marketplace provides plugins that extend Claude Code's c
 | Plugin | Description | Commands | Agents | Skills | Version |
 |--------|-------------|----------|--------|--------|---------|
 | [ai-git](plugins/ai-git/) | AI-powered git automation and workflow streamlining | `/commit-push` | - | - | 1.0.0 |
-| [ai-security](plugins/ai-security/) | AI-powered security auditing with reproducible reports | `/security-audit` | `security-auditor` | - | 1.0.0 |
+| [ai-security](plugins/ai-security/) | AI-powered security auditing with reproducible reports | `/security-init`, `/security-audit` | `security-auditor` | - | 1.1.0 |
 | [ai-performance](plugins/ai-performance/) | AI-powered performance optimization and bottleneck detection | `/performance-audit` | `performance-optimizer` | - | 1.0.0 |
 | [ai-plugins](plugins/ai-plugins/) | AI-powered plugin scaffolding and generation tools | `/scaffold-plugin` | - | - | 1.0.0 |
 
@@ -49,6 +49,7 @@ Once installed, plugins add slash commands directly to Claude Code. Use any comm
 ```bash
 # Examples:
 /commit-push           # AI-powered git commits
+/security-init         # Initialize security settings
 /security-audit        # Comprehensive security analysis
 ```
 

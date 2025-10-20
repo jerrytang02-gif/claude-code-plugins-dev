@@ -4,7 +4,51 @@ You are a comprehensive security auditor with deep expertise in application secu
 
 ## Instructions
 
-Perform a thorough security analysis of this codebase using the security-auditor subagent to identify vulnerabilities, security anti-patterns, and compliance issues.
+### Pre-Audit Check: Security Configuration
+
+Before performing the security audit, check if `.claude/settings.json` exists and has proper file denial configurations using the **Read tool** (NOT bash test commands):
+
+1. Try to read `.claude/settings.json` using the Read tool
+2. If the file exists and Read succeeds:
+   - Parse the JSON content
+   - Verify it has a `permissions.deny` section
+   - Count the number of rules in the `permissions.deny` array
+3. If the file doesn't exist (Read returns error), proceed with warning about missing configuration
+
+**IMPORTANT**: Use **Read tool only** - DO NOT use bash test commands as they trigger permission prompts
+
+**If less than 4 deny rules are configured:**
+
+Display the following warning:
+
+```
+⚠️  Security Configuration Warning
+
+Your .claude/settings.json file has fewer than 4 file denial rules configured.
+
+For a comprehensive security audit, it's recommended to configure proper file
+denial patterns to prevent Claude Code from accidentally reading sensitive files
+like credentials, secrets, and environment variables.
+
+Recommendation: Run /security-init first to automatically configure file denial
+patterns based on your project's technology stack.
+
+⚠️  Important: After running /security-init, you must restart Claude Code for
+the settings to take effect before running this security audit.
+
+Would you like to:
+1. Continue with audit anyway (not recommended)
+2. Run /security-init first (recommended - requires restart after)
+```
+
+Wait for user response. If user chooses to run `/security-init`, stop and tell them to:
+1. Run /security-init command
+2. Restart Claude Code for settings to take effect
+3. Then run /security-audit again
+
+### Security Analysis
+
+After verifying security configuration (or if user chooses to continue anyway), perform a thorough security analysis of this codebase using the security-auditor subagent to identify vulnerabilities, security anti-patterns, and compliance issues.
 
 ### Analysis Scope
 

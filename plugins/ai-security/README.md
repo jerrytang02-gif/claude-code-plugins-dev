@@ -32,9 +32,50 @@ This plugin enhances security scanning by providing:
 
 ## 📋 Available Commands
 
+### `/security-init`
+
+Initialize Claude Code security settings by automatically configuring `.claude/settings.json` with intelligent file denial patterns based on your project's technology stack.
+
+**What it does:**
+
+- 🔍 **Scans your project** to detect technologies (Node.js, Python, .NET, Go, Rust, PHP, Docker, etc.)
+- 🛡️ **Builds comprehensive deny patterns** to prevent Claude Code from reading sensitive files:
+  - Environment files (`.env`, `.env.*`)
+  - Credentials and secrets (`credentials.json`, `secrets.yml`)
+  - SSH keys and certificates (`*.pem`, `*.key`, `id_rsa`)
+  - Cloud provider configs (`.aws/credentials`, `.gcp/*`)
+  - Build artifacts (`node_modules`, `bin/`, `obj/`, `target/`, `vendor/`)
+  - Version control and IDE files (`.git/`, `.vscode/`, `.idea/`)
+- 🔄 **Smart merging** with existing settings (preserves your custom configurations)
+- 📊 **Shows preview** before making changes
+- ✅ **User confirmation** required before writing
+
+**Before (manual):**
+
+```
+# Manually create .claude/settings.json
+# Research what files should be denied
+# Add patterns one by one
+# Hope you didn't miss anything sensitive
+```
+
+**After (with ai-security plugin):**
+
+```
+/security-init
+# ✨ AI detects your tech stack
+# ✨ Builds comprehensive deny patterns (40-60+ patterns)
+# ✨ Shows preview and asks for confirmation
+# ✨ Merges with existing settings intelligently
+# ✅ Security configured in seconds
+# ⚠️  Restart Claude Code for settings to take effect
+```
+
 ### `/security-audit`
 
 Perform comprehensive security analysis on your codebase and generate a detailed audit report with vulnerability findings and remediation guidance.
+
+**Note:** The `/security-audit` command will automatically check if you have proper file denial patterns configured. If you have fewer than 4 deny rules, it will recommend running `/security-init` first to ensure comprehensive protection.
 
 **Before (manual):**
 
@@ -80,10 +121,16 @@ Specialized agent that performs deep security analysis and generates comprehensi
 ### Usage
 
 ```
-# Run a security audit
+# Step 1: Initialize security settings (recommended first step)
+/security-init
+
+# Step 2: Restart Claude Code (required for settings to take effect)
+# Close and reopen Claude Code
+
+# Step 3: Run a security audit
 /security-audit
 
-# Review the generated report
+# Step 4: Review the generated report
 # Located at: /docs/security/{timestamp}-security-audit.md
 # Example: /docs/security/2025-10-17-143022-security-audit.md
 ```
@@ -91,6 +138,64 @@ Specialized agent that performs deep security analysis and generates comprehensi
 ---
 
 ## 💡 Features
+
+### `/security-init` Command
+
+#### Intelligent Technology Detection
+
+Automatically detects your project's technology stack by scanning for indicator files:
+
+- **Node.js**: `package.json`, `yarn.lock`, `pnpm-lock.yaml`
+- **Python**: `requirements.txt`, `pyproject.toml`, `setup.py`, `poetry.lock`
+- **.NET**: `*.csproj`, `*.sln`, `global.json`
+- **Go**: `go.mod`, `go.sum`
+- **Rust**: `Cargo.toml`, `Cargo.lock`
+- **PHP**: `composer.json`, `composer.lock`
+- **Ruby**: `Gemfile`, `Gemfile.lock`
+- **Java**: `pom.xml`, `build.gradle`, `build.gradle.kts`
+- **Docker**: `Dockerfile`, `docker-compose.yml`
+
+#### Comprehensive File Denial Patterns
+
+Builds an intelligent deny list with 40-60+ patterns covering:
+
+**Security Essentials:**
+- Environment files (all `.env` variants)
+- Credentials and secrets files
+- SSH keys and certificates (`.pem`, `.key`, `id_rsa`, etc.)
+- Cloud provider configs (AWS, GCP, Azure)
+- Database files (`.db`, `.sqlite`)
+
+**Technology-Specific Patterns:**
+- **Python**: `.venv/`, `__pycache__/`, `*.pyc`, `.pytest_cache/`, `dist/`, `*.egg-info/`
+- **.NET**: `bin/`, `obj/`, `*.user`, `.vs/`, `TestResults/`
+- **Node.js**: `node_modules/`, `.next/`, `.nuxt/`, `dist/`, `.turbo/`
+- **Go**: `vendor/`
+- **Rust**: `target/`
+- **PHP**: `vendor/`
+- **Ruby**: `vendor/bundle/`, `.bundle/`
+- **Java**: `target/`, `*.class`, `.gradle/`
+
+**Version Control & IDE:**
+- `.git/**`, `.vscode/**`, `.idea/**`
+- `.devcontainer/**`, `.github/workflows/**`
+
+#### Smart Merge Strategies
+
+When `.claude/settings.json` already exists, you can choose how to merge:
+
+- **Deduplicate** (default): Remove duplicate patterns, add only new ones
+- **Append**: Add all new patterns, keep any duplicates
+- **Replace**: Completely replace existing deny section
+
+#### Preview & Confirmation
+
+Before making any changes, see:
+- Technologies detected
+- Current configuration (if exists)
+- All new patterns grouped by category
+- Total patterns before/after merge
+- Merge strategy being used
 
 ### `/security-audit` Command
 
@@ -299,10 +404,10 @@ This timestamp-based naming ensures multiple audits on the same day don't overwr
 ## 📦 Plugin Details
 
 - **Name:** AI-Security
-- **Version:** 1.0.0
+- **Version:** 1.1.0
 - **Type:** Comprehensive Security Toolkit
 - **Features:**
-  - Commands: `/security-audit`
+  - Commands: `/security-init`, `/security-audit`
   - Agents: `security-auditor`
 - **License:** MIT
 - **Author:** Charles Jones
