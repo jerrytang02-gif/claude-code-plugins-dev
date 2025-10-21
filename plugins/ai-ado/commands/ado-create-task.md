@@ -45,7 +45,77 @@ Before proceeding with task creation, verify that Azure DevOps configuration exi
 
 ### Phase 2: Gather Task Information
 
-Collect task details from the user in a sequential flow. Ask for each value and wait for the user's response before proceeding to the next.
+Collect task details from the user. The user can choose between AI-powered generation or manual input.
+
+**Step 0 - Choose Input Method:**
+
+Simply output the following text as your response message and STOP (DO NOT call any tools):
+
+"Would you like to use AI to generate the Task title, or provide it manually?
+
+Options:
+1. AI-powered: Provide a description and let AI generate an appropriate task title
+2. Manual: Provide the task title yourself
+
+Please respond with 'AI' or 'Manual'."
+
+Wait for the user's response before proceeding.
+
+**If user chooses 'AI' (or similar affirmative response):**
+
+**Step AI-0 - Get Parent User Story ID:**
+
+Simply output the following text as your response message and STOP (DO NOT call any tools):
+
+"What is the ID of the parent User Story for this Task?
+
+(This is the numeric ID of the User Story work item that will contain this task. You can find this in Azure DevOps or from the output of /ado-create-story)"
+
+Wait for the user's next message with the parent story ID before proceeding.
+
+**Step AI-1 - Get Description Prompt:**
+
+Simply output the following text as your response message and STOP:
+
+"Please provide a description of what this Task should accomplish. I'll use this to generate an appropriate task title.
+
+(Describe the specific work to be done. Examples: 'implement the login API endpoint', 'test authentication flows', 'create database migration for users table')"
+
+Wait for the user's description, then:
+
+1. Retrieve the parent User Story details to understand context
+2. Generate a professional Task title that is:
+   - Simple and descriptive
+   - Focused on the work to be done
+   - Follows common patterns like: 'Development for [feature]', 'QA testing for [feature]', 'Deploy [component]'
+   - Clear and actionable
+
+**Step AI-2 - Confirm Generated Title:**
+
+Display the generated title and ask for confirmation:
+
+"I've generated the following title based on your description:
+
+**Title:** [GENERATED_TITLE]
+
+Would you like to use this title, or would you prefer to provide your own?
+(Type 'yes' to use this title, or provide an alternative title)"
+
+Wait for response:
+- If user approves (says "yes", "ok", "looks good", etc.), store the generated title
+- If user provides alternative text, use that as the title instead
+
+**Step AI-3 - Hour Estimate:**
+
+Simply output the following text as your response message and STOP:
+
+"What is the hour estimate for this Task?
+
+(This value will be set for both 'Original Estimate' and 'Remaining Work' fields. Provide a numeric value in hours.)"
+
+Wait for the user's next message with the hour estimate before proceeding to Phase 3.
+
+**If user chooses 'Manual':**
 
 **Step 1 - Parent User Story ID:**
 
@@ -79,9 +149,12 @@ After receiving the task title, simply output the following text as your respons
 Wait for the user's next message with the hour estimate before proceeding.
 
 **IMPORTANT**:
-- Simply output the question text in your response message and STOP - do NOT call ANY tools
+- Simply output the question text in your response message and STOP - do NOT call ANY tools (except when generating AI content)
 - DO NOT use the AskUserQuestion tool for any of these steps
 - After outputting each question, wait for the user's next message before proceeding
+- For AI mode: Generate task title based on user description and parent story context
+- For AI mode: Always confirm generated content and allow user to override
+- For AI mode: Parent User Story ID is still required before generating title
 - Validate that required fields are provided (not empty)
 - Parent User Story ID must be a valid number
 - Hour estimate must be a valid number

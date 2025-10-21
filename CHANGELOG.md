@@ -7,6 +7,99 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2025-10-21
+
+### Added
+
+#### AI-ADO Plugin (v1.1.0)
+
+- **AI-Powered Work Item Generation** for all work item creation commands
+  - `/ado-create-feature`, `/ado-create-story`, and `/ado-create-task` now support AI-powered generation mode
+  - Users can choose between AI generation or manual input for each work item
+  - AI generates professional content based on user description:
+    - Features: Titles and comprehensive descriptions following naming conventions
+    - User Stories: Titles, persona statements (As a... I want to... so that...), background information, and acceptance criteria (Given/When/Then format)
+    - Tasks: Descriptive titles focused on work to be done
+  - Review and confirmation workflow for all AI-generated content
+  - Users can override any AI-generated field with custom text
+  - AI analyzes CLAUDE.md configuration for naming conventions and standards
+  - Context-aware generation retrieves parent work item details for better quality
+
+- `/ado-log-story-work` command for rapid logging of completed work to User Stories
+  - Creates Task work items with completed hours already set
+  - AI-powered or manual task title and description generation
+  - Automatic git commit hash detection and lookup for enhanced context
+  - Sets both "Original Estimate" and "Completed Work" fields (leaves "Remaining Work" empty)
+  - Optional placeholder task hour subtraction feature
+  - Subtracts hours from placeholder task's "Original Estimate" and "Remaining Work" fields
+  - Designed for multiple daily work logging sessions
+  - Displays comprehensive success message with task and placeholder task details
+
+#### AI-Security Plugin (v1.2.0)
+
+- **Hybrid Agent + Skill Architecture** for optimal context efficiency
+  - New `security-audit` skill (`skills/security-audit/SKILL.md`) with comprehensive security methodology
+  - Interactive security audits when code is already in conversation context
+  - Skill auto-loads when Claude detects security-related tasks
+  - Full security expertise without consuming context until needed
+  - Progressive disclosure design: metadata (~100 words) → full skill (~5k words) → only when relevant
+
+#### AI-Performance Plugin (v1.1.0)
+
+- **Hybrid Agent + Skill Architecture** for optimal context efficiency
+  - New `performance-audit` skill (`skills/performance-audit/SKILL.md`) with comprehensive performance methodology
+  - Interactive performance analysis when code is already in conversation context
+  - Skill auto-loads when Claude detects performance-related tasks
+  - Full performance expertise without consuming context until needed
+  - Progressive disclosure design: metadata (~100 words) → full skill (~5k words) → only when relevant
+
+#### AI-Plugins Plugin (v1.2.0)
+
+- **Plugin Development Skills** for interactive plugin and skill creation
+  - New `plugins-scaffold` skill (`skills/plugins-scaffold/SKILL.md`) for creating Claude Code plugins
+  - New `skills-scaffold` skill (`skills/skills-scaffold/SKILL.md`) for creating Claude Code skills
+  - Interactive guidance when creating plugins, manifests, commands, agents, skills, or hooks
+  - Skills auto-load when Claude detects plugin development tasks
+  - Comprehensive coverage of plugin architecture, marketplace setup, and best practices
+
+#### AI-ADO Plugin (v1.1.0)
+
+- **Azure DevOps Work Items Skill** for MCP-powered work item management
+  - New `ado-work-items` skill (`skills/ado-work-items/SKILL.md`) for creating and managing ADO work items
+  - Enforces proper work item hierarchy (Features → User Stories → Tasks)
+  - HTML formatting guidance for descriptions and acceptance criteria
+  - Naming convention support (decimal notation or descriptive names)
+  - Story points and hour estimation best practices
+  - Auto-loads when using Azure DevOps MCP server tools
+
+### Changed
+
+#### AI-Security Plugin (v1.2.0)
+
+- **Converted `security-auditor` agent to lightweight wrapper** (reduced from ~2000 words to ~100 words)
+  - Agent now loads the `security-audit` skill in fresh context
+  - Eliminates context overhead in every conversation when agent isn't used
+  - Enables flexible usage: skill for interactive work, agent for fresh context
+  - Provides full 200K token budget when launching agent for large codebases
+
+#### AI-Performance Plugin (v1.1.0)
+
+- **Converted `performance-optimizer` agent to lightweight wrapper** (reduced from ~1500 words to ~100 words)
+  - Agent now loads the `performance-audit` skill in fresh context
+  - Eliminates context overhead in every conversation when agent isn't used
+  - Enables flexible usage: skill for interactive work, agent for fresh context
+  - Provides full 200K token budget when launching agent for large codebases
+
+### Fixed
+
+#### AI-ADO Plugin (v1.1.0)
+
+- **Corrected Acceptance Criteria field handling in `/ado-create-story` command**
+  - Fixed issue where acceptance criteria was incorrectly included in Description field
+  - Now properly sets acceptance criteria in the dedicated `Microsoft.VSTS.Common.AcceptanceCriteria` field
+  - Description field now correctly contains only persona statement and background information
+  - Both Story Points and Acceptance Criteria are set in a single `wit_update_work_item` operation
+
 ## [1.2.0] - 2025-10-20
 
 ### Added
@@ -163,7 +256,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin installation and usage instructions
 - License information (MIT)
 
-[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.0.0...v1.0.1

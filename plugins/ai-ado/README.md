@@ -16,15 +16,19 @@ Initialize Azure DevOps configuration by creating or updating `CLAUDE.md` with o
 
 ### `/ado-create-feature`
 
-Interactively create a new Feature work item in Azure DevOps following your organization's configured conventions.
+Interactively create a new Feature work item in Azure DevOps following your organization's configured conventions. Supports both AI-powered generation and manual input modes.
 
 ### `/ado-create-story`
 
-Interactively create a new User Story work item as a child of an existing Feature, with guided prompts for persona statements, background, and acceptance criteria.
+Interactively create a new User Story work item as a child of an existing Feature, with guided prompts for persona statements, background, and acceptance criteria. Supports both AI-powered generation and manual input modes.
 
 ### `/ado-create-task`
 
-Interactively create a new Task work item as a child of an existing User Story, with hour estimation and lightweight task tracking.
+Interactively create a new Task work item as a child of an existing User Story, with hour estimation and lightweight task tracking. Supports both AI-powered generation and manual input modes.
+
+### `/ado-log-story-work`
+
+Rapidly log completed work to a User Story by creating a Task work item with completed hours already set. Designed for quick logging multiple times per day. Supports AI-powered generation with automatic git commit hash detection and optional placeholder task hour subtraction.
 
 **What it does:**
 
@@ -52,17 +56,33 @@ Interactively create a new Task work item as a child of an existing User Story, 
 **What it does:**
 
 - Validates Azure DevOps configuration exists in CLAUDE.md
-- Prompts for feature title following naming conventions
-- Prompts for high-level feature description
+- Offers choice between AI-powered generation or manual input
+- **AI Mode**: Generate professional title and description from a simple prompt
+- **Manual Mode**: Provide title and description yourself
 - Creates Feature work item with proper HTML formatting
 - Sets Area Path, Iteration Path, and State automatically
 - Displays success message with work item ID and Azure DevOps link
 
-**Usage:**
+**Usage (AI Mode):**
 
 ```
 /ado-create-feature
 
+# Choose: AI
+# Provide a description of what the feature should accomplish
+# ✨ AI generates professional title following naming conventions
+# ✨ AI generates comprehensive feature description
+# ✨ Review and confirm or override each generated field
+# ✨ Creates Feature with ID and hierarchy link
+# ✅ Done!
+```
+
+**Usage (Manual Mode):**
+
+```
+/ado-create-feature
+
+# Choose: Manual
 # You'll be prompted for:
 # - Feature title (e.g., "1: User Authentication System")
 # - Feature description (high-level overview)
@@ -82,21 +102,37 @@ Interactively create a new Task work item as a child of an existing User Story, 
 
 - Validates Azure DevOps configuration exists in CLAUDE.md
 - Prompts for parent Feature ID to create hierarchy
-- Guides you through user story creation with structured prompts:
-  - Story title following naming conventions
-  - User persona statement (As a... I want to... so that...)
-  - Background information with context
-  - Acceptance criteria in Given/When/Then format
-  - Story Points estimation (Fibonacci sequence)
+- Offers choice between AI-powered generation or manual input
+- **AI Mode**: Generate professional title, persona statement, background, and acceptance criteria from a simple description
+- **Manual Mode**: Provide each field yourself through guided prompts
 - Creates User Story as child of Feature with proper linking
 - Applies HTML formatting for readability
 - Sets Area Path, Iteration Path, and State automatically
 
-**Usage:**
+**Usage (AI Mode):**
 
 ```
 /ado-create-story
 
+# Choose: AI
+# Provide parent Feature ID
+# Describe what the user story should accomplish
+# ✨ AI generates professional title following naming conventions
+# ✨ AI generates persona statement (As a... I want to... so that...)
+# ✨ AI generates background information with technical details
+# ✨ AI generates acceptance criteria in Given/When/Then format
+# ✨ Review and confirm or override each generated field
+# ✨ Provide Story Points estimation
+# ✨ Creates User Story linked to Feature
+# ✅ Done!
+```
+
+**Usage (Manual Mode):**
+
+```
+/ado-create-story
+
+# Choose: Manual
 # You'll be prompted for:
 # - Parent Feature ID (e.g., 123)
 # - Story title (e.g., "1.1: Implement user login functionality")
@@ -121,20 +157,36 @@ Interactively create a new Task work item as a child of an existing User Story, 
 
 - Validates Azure DevOps configuration exists in CLAUDE.md
 - Prompts for parent User Story ID to create hierarchy
-- Guides you through task creation:
-  - Task title (descriptive, focused on work to be done)
-  - Hour estimate for tracking
+- Offers choice between AI-powered generation or manual input
+- **AI Mode**: Generate professional task title from a simple description
+- **Manual Mode**: Provide task title yourself
 - Creates Task as child of User Story with proper linking
 - Sets Original Estimate and Remaining Work to same value
 - Leaves Completed Work empty (to be filled during progress)
 - Sets Area Path, Iteration Path, and State automatically
 - Keeps task description lightweight (references parent story)
 
-**Usage:**
+**Usage (AI Mode):**
 
 ```
 /ado-create-task
 
+# Choose: AI
+# Provide parent User Story ID
+# Describe what the task should accomplish
+# ✨ AI generates professional task title based on description
+# ✨ Review and confirm or override generated title
+# ✨ Provide hour estimate
+# ✨ Creates Task linked to User Story
+# ✅ Done!
+```
+
+**Usage (Manual Mode):**
+
+```
+/ado-create-task
+
+# Choose: Manual
 # You'll be prompted for:
 # - Parent User Story ID (e.g., 124)
 # - Task title (e.g., "Development for user login functionality")
@@ -150,6 +202,89 @@ Interactively create a new Task work item as a child of an existing User Story, 
 - Must run `/ado-init` first to configure Azure DevOps settings
 - Must have an existing User Story work item (create with `/ado-create-story`)
 - Azure DevOps MCP server must be configured and running
+
+### `/ado-log-story-work` Command Details
+
+**What it does:**
+
+- Validates Azure DevOps configuration exists in CLAUDE.md
+- Prompts for parent User Story ID to create hierarchy
+- Offers choice between AI-powered generation or manual input
+- **AI Mode**: Automatically detects git commit hashes in description and looks up commit details
+- **AI Mode**: Generates professional task title and description based on prompt and commit context
+- **Manual Mode**: Provide task title and description yourself
+- Creates Task as child of User Story with proper linking
+- Sets Original Estimate and Completed Work to the same value
+- Leaves Remaining Work empty (work is already complete)
+- Optionally subtracts hours from a placeholder task's Original Estimate and Remaining Work
+- Displays comprehensive success message with task and optional placeholder task details
+
+**Usage (AI Mode):**
+
+```
+/ado-log-story-work
+
+# Provide parent User Story ID
+# Choose: AI
+# Describe the completed work (optionally include a git commit hash)
+# ✨ AI automatically detects commit hash (full or short SHA)
+# ✨ AI runs git show to retrieve commit details (message, files changed)
+# ✨ AI generates professional task title based on description and commit
+# ✨ AI generates task description with commit context (both full and short SHA)
+# ✨ Review and confirm or override each generated field
+# ✨ Provide completed hours
+# ✨ Choose whether to subtract hours from placeholder task
+#    - If yes, provide placeholder task ID
+#    - AI retrieves current placeholder values
+#    - AI calculates and updates new values
+# ✨ Creates Task with completed work logged
+# ✨ Shows success message with task and optional placeholder updates
+# ✅ Done!
+```
+
+**Usage (Manual Mode):**
+
+```
+/ado-log-story-work
+
+# Provide parent User Story ID
+# Choose: Manual
+# You'll be prompted for:
+# - Task title (e.g., "Implement authentication endpoints")
+# - Task description (e.g., "Added JWT token validation and refresh logic")
+# - Completed hours (e.g., 3.5)
+# - Subtract from placeholder? (yes/no)
+#    - If yes: Placeholder task ID (e.g., 456)
+
+# ✨ Creates Task with completed work logged
+# ✨ Optionally updates placeholder task hours
+# ✨ Shows Azure DevOps URLs for immediate viewing
+# ✅ Done!
+```
+
+**Git Commit Hash Detection:**
+
+The command automatically detects git commit hashes in your description:
+- Supports both full SHA (40 characters) and short SHA (7+ characters)
+- Common patterns: "commit abc123", "see commit 1a2b3c4", "hash: def456789"
+- Runs `git show` to retrieve commit message and file changes
+- Includes commit details in generated task description
+- If git lookup fails, continues without commit context (non-blocking)
+
+**Placeholder Task Hour Subtraction:**
+
+When logging completed work, you can optionally subtract hours from a placeholder task:
+- Useful for tracking hours from a pre-allocated hour bucket
+- Subtracts from both "Original Estimate" and "Remaining Work" fields
+- Calculates new values automatically (prevents negative values)
+- Shows before/after comparison in success message
+- Displays both task and placeholder task Azure DevOps links
+
+**Requirements:**
+- Must run `/ado-init` first to configure Azure DevOps settings
+- Must have an existing User Story work item (create with `/ado-create-story`)
+- Azure DevOps MCP server must be configured and running
+- Git repository accessible (optional, for commit hash lookup)
 
 ---
 
@@ -200,20 +335,41 @@ Interactively create a new Task work item as a child of an existing User Story, 
 
 /ado-create-task
 # Creates a Task under a User Story
+
+# Step 3: Log completed work to user stories
+/ado-log-story-work
+# Rapidly log completed work with hours already set
 ```
 
 ---
 
 ## 💡 Features
 
+### AI-Powered Work Item Generation
+
+All work item creation commands (`/ado-create-feature`, `/ado-create-story`, `/ado-create-task`) now support **AI-powered generation mode**:
+
+- **Intelligent Content Generation**: Describe what you want to build, and AI generates professional work item content
+- **Naming Convention Compliance**: AI automatically follows your organization's naming conventions from CLAUDE.md
+- **Review & Override**: Every AI-generated field is shown for confirmation before proceeding
+- **Flexible Workflows**: Choose between AI generation or manual input for each work item
+- **Context-Aware**: AI analyzes parent work items and project context for better quality
+
+**What AI Generates:**
+
+- **Features**: Professional titles and comprehensive descriptions
+- **User Stories**: Titles, persona statements, background information, and acceptance criteria in Given/When/Then format
+- **Tasks**: Descriptive titles focused on work to be done
+
 ### Core Commands
 
-The plugin provides four slash commands for complete Azure DevOps work item lifecycle management:
+The plugin provides five slash commands for complete Azure DevOps work item lifecycle management:
 
 1. **`/ado-init`**: Initialize Azure DevOps configuration with organization settings
-2. **`/ado-create-feature`**: Create Feature work items following conventions
-3. **`/ado-create-story`**: Create User Story work items with structured templates
-4. **`/ado-create-task`**: Create Task work items with hour tracking
+2. **`/ado-create-feature`**: Create Feature work items with AI or manual input
+3. **`/ado-create-story`**: Create User Story work items with AI-generated structured content
+4. **`/ado-create-task`**: Create Task work items with AI-generated titles
+5. **`/ado-log-story-work`**: Rapidly log completed work with git commit detection and placeholder hour tracking
 
 ### `/ado-init` Command
 
@@ -347,21 +503,25 @@ State: New
 
 **Per work item set (Feature + 3 Stories + 9 Tasks):**
 
-- Manual: ~45-60 minutes (research format, create items, set fields, establish hierarchy)
-- With ai-ado: ~5-10 minutes (AI follows conventions automatically)
+- Manual Azure DevOps: ~45-60 minutes (research format, create items, set fields, establish hierarchy)
+- With ai-ado (Manual Mode): ~5-10 minutes (follows conventions automatically)
+- **With ai-ado (AI Mode): ~2-4 minutes** (AI generates content, you just review and confirm)
 
-**Estimated savings:**
+**Estimated savings with AI Mode:**
 
-- Per sprint (3 feature sets): Save ~2-2.5 hours
-- Per quarter: Save ~25-30 hours
-- Per year: Save ~100+ hours
+- Per sprint (3 feature sets): Save ~2.5-3 hours
+- Per quarter: Save ~30-36 hours
+- Per year: Save ~120-144 hours
 
 **Additional benefits:**
 
-- Consistent work item quality across team
-- Reduced onboarding time for new developers
-- Fewer mistakes in work item hierarchy
-- Better backlog organization and priority sorting
+- **AI-Generated Quality**: Professional, well-structured work items every time
+- **Consistent Standards**: AI follows your naming conventions and formatting rules
+- **Reduced Mental Load**: Focus on what to build, not how to write work items
+- **Better Acceptance Criteria**: AI generates comprehensive Given/When/Then scenarios
+- **Faster Onboarding**: New team members get professional work items without training
+- **Fewer Mistakes**: AI handles hierarchy, HTML formatting, and field requirements
+- **Better Backlog**: Consistent organization and priority sorting
 
 ---
 
@@ -437,9 +597,9 @@ Future commands and features planned for this plugin:
 ## 📦 Plugin Details
 
 - **Name:** AI-ADO Plugin
-- **Version:** 1.0.0
+- **Version:** 1.1.0
 - **Type:** AI Instruction Plugin (Slash Commands)
-- **Commands:** `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`
+- **Commands:** `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`, `/ado-log-story-work`
 - **MCP Integration:** Microsoft Azure DevOps MCP Server (optional, OS-aware configuration)
 - **Requirements:** Node.js 20+
 - **License:** MIT

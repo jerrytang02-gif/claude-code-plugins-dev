@@ -6,10 +6,32 @@
   },
   "metadata": {
     "description": "A curated list of custom Claude Code plugins, agents, and skills for developers.",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "pluginRoot": "./plugins"
   },
   "plugins": [
+    {
+      "name": "ai-ado",
+      "source": "./plugins/ai-ado",
+      "description": "AI-powered Azure DevOps integration with skills - Intelligent work item management, configuration, and automation for Azure DevOps workflows with MCP integration",
+      "version": "1.1.0",
+      "keywords": [
+        "ai",
+        "azure-devops",
+        "ado",
+        "devops",
+        "work-items",
+        "automation",
+        "productivity",
+        "mcp",
+        "integration"
+      ],
+      "author": {
+        "name": "Charles Jones",
+        "url": "https://charlesjones.dev"
+      },
+      "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev"
+    },
     {
       "name": "ai-git",
       "source": "./plugins/ai-git",
@@ -32,39 +54,18 @@
       "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev"
     },
     {
-      "name": "ai-security",
-      "source": "./plugins/ai-security",
-      "description": "AI-powered security auditing - Intelligent security scanning, settings initialization, and vulnerability detection with comprehensive reporting",
-      "version": "1.1.0",
-      "keywords": [
-        "ai",
-        "security",
-        "compliance",
-        "auditing",
-        "auditor",
-        "vulnerability",
-        "owasp",
-        "scanning",
-        "defensive"
-      ],
-      "author": {
-        "name": "Charles Jones",
-        "url": "https://charlesjones.dev"
-      },
-      "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev"
-    },
-    {
       "name": "ai-performance",
       "source": "./plugins/ai-performance",
-      "description": "AI-powered performance optimization - Intelligent performance analysis and bottleneck detection with comprehensive reporting",
-      "version": "1.0.0",
+      "description": "AI-powered performance optimization - Interactive performance audit skill and automated agent with comprehensive bottleneck detection and optimization",
+      "version": "1.1.0",
       "keywords": [
         "ai",
         "performance",
         "optimization",
         "analysis",
         "bottleneck",
-        "scalability"
+        "scalability",
+        "skills"
       ],
       "author": {
         "name": "Charles Jones",
@@ -75,8 +76,8 @@
     {
       "name": "ai-plugins",
       "source": "./plugins/ai-plugins",
-      "description": "AI-powered plugin development - Intelligent plugin scaffolding and generation tools for Claude Code",
-      "version": "1.1.0",
+      "description": "AI-powered plugin and skill development - Intelligent plugin and skill scaffolding and generation tools for Claude Code",
+      "version": "1.2.0",
       "keywords": [
         "ai",
         "plugins",
@@ -94,20 +95,21 @@
       "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev"
     },
     {
-      "name": "ai-ado",
-      "source": "./plugins/ai-ado",
-      "description": "AI-powered Azure DevOps integration - Intelligent work item management, configuration, and automation for Azure DevOps workflows with MCP integration",
-      "version": "1.0.0",
+      "name": "ai-security",
+      "source": "./plugins/ai-security",
+      "description": "AI-powered security auditing - Interactive security audit skill and automated agent with comprehensive vulnerability detection and reporting",
+      "version": "1.2.0",
       "keywords": [
         "ai",
-        "azure-devops",
-        "ado",
-        "devops",
-        "work-items",
-        "automation",
-        "productivity",
-        "mcp",
-        "integration"
+        "security",
+        "compliance",
+        "auditing",
+        "auditor",
+        "vulnerability",
+        "owasp",
+        "scanning",
+        "defensive",
+        "skills"
       ],
       "author": {
         "name": "Charles Jones",

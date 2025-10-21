@@ -1,5 +1,11 @@
 # Claude Code Plugins for Developers
 
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/releases)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/charlesjones-dev/claude-code-plugins-dev.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/charlesjones-dev/claude-code-plugins-dev.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/stargazers)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/graphs/commit-activity)
+
 A curated list of custom Claude Code plugins, agents, and skills for developers.
 
 ## 🎯 Overview
@@ -10,10 +16,10 @@ This Claude Code plugin marketplace provides plugins that extend Claude Code's c
 
 | Plugin | Description | Commands | Agents | Skills | Version |
 |--------|-------------|----------|--------|--------|---------|
-| [ai-ado](plugins/ai-ado/) | AI-powered Azure DevOps integration with MCP support | `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task` | - | - | 1.0.0 |
+| [ai-ado](plugins/ai-ado/) | AI-powered Azure DevOps integration with MCP support | `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`, `/ado-log-story-work` | - | `ado-work-items` | 1.1.0 |
 | [ai-git](plugins/ai-git/) | AI-powered git automation and workflow streamlining | `/git-init`, `/git-commit-push` | - | - | 1.1.0 |
 | [ai-performance](plugins/ai-performance/) | AI-powered performance optimization and bottleneck detection | `/performance-audit` | `performance-optimizer` | - | 1.0.0 |
-| [ai-plugins](plugins/ai-plugins/) | AI-powered plugin scaffolding and generation tools | `/plugins-scaffold` | - | - | 1.1.0 |
+| [ai-plugins](plugins/ai-plugins/) | AI-powered plugin and skill scaffolding and generation tools | `/plugins-scaffold` | - | `skills-scaffold`, `plugins-scaffold` | 1.2.0 |
 | [ai-security](plugins/ai-security/) | AI-powered security auditing with reproducible reports | `/security-init`, `/security-audit` | `security-auditor` | - | 1.1.0 |
 
 ## 🚀 Quick Start
