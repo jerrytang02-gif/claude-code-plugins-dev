@@ -245,38 +245,44 @@ Wait for the user's next message with story points before proceeding.
 
 Using the configuration from Phase 1 and the information from Phase 2, create the user story work item:
 
-1. Build the complete description in HTML format:
+1. Build the description in HTML format (WITHOUT acceptance criteria):
    - Start with the persona statement wrapped in `<p>` tags
    - If background information was provided (not 'none'):
      - Add a blank line and `<p><strong>Background:</strong></p>`
      - Format background as bullet list with `<ul>` and `<li>` tags
-   - Add a blank line and `<p><strong>Acceptance Criteria:</strong></p>`
-   - Format acceptance criteria with proper line breaks using `<br/>` tags or bullet list format
+   - **DO NOT include acceptance criteria in the description** - they go in a separate field
 
-2. Use the **wit_add_child_work_items** MCP tool with the following parameters:
+2. Format the acceptance criteria in HTML format:
+   - Use proper line breaks with `<br/>` tags or bullet list format with `<ul>` and `<li>` tags
+   - This will be set in the separate Acceptance Criteria field
+
+3. Use the **wit_add_child_work_items** MCP tool with the following parameters:
    - `parentId`: The parent feature ID provided by user (as number, not string)
    - `project`: Use the project name from Phase 1 configuration
    - `workItemType`: "User Story"
    - `items`: Array containing a single item object with:
      - `title`: User-provided title
-     - `description`: HTML-formatted description from step 1
+     - `description`: HTML-formatted description from step 1 (persona + background only)
      - `format`: "Html"
      - `areaPath`: Area Path from configuration
      - `iterationPath`: Iteration Path from configuration
 
-3. After the user story is created, use the **wit_update_work_item** MCP tool to set Story Points:
+4. After the user story is created, use the **wit_update_work_item** MCP tool to set both Story Points AND Acceptance Criteria:
    - `id`: The ID of the newly created user story (from the response of wit_add_child_work_items)
-   - `updates`: Array containing:
+   - `updates`: Array containing two update operations:
      - `{"op": "add", "path": "/fields/Microsoft.VSTS.Scheduling.StoryPoints", "value": "[STORY_POINTS_VALUE]"}`
+     - `{"op": "add", "path": "/fields/Microsoft.VSTS.Common.AcceptanceCriteria", "value": "[HTML_FORMATTED_ACCEPTANCE_CRITERIA]"}`
 
-4. Wait for both MCP tool responses
+5. Wait for both MCP tool responses
 
 **IMPORTANT**:
 - Use the exact field names and paths shown above
-- Ensure HTML formatting is applied to the description
+- Ensure HTML formatting is applied to both description and acceptance criteria
+- **DO NOT include acceptance criteria in the description field** - use the separate AcceptanceCriteria field
 - Parent ID must be converted to a number (not a string)
 - Use configuration values from Phase 1, not hardcoded values
-- Story Points must be set in a separate update operation after creation
+- Story Points and Acceptance Criteria must be set in a separate update operation after creation
+- Both Story Points and Acceptance Criteria can be set in a single wit_update_work_item call with multiple update operations
 
 ### Phase 4: Display Success Message
 
@@ -321,14 +327,16 @@ Replace placeholders with actual values from the created story and configuration
 - Use placeholder or empty values
 - Call tools during Steps 1-6 (questions should be simple text output)
 - Include Description or Acceptance Criteria in the work item title
+- Include Acceptance Criteria in the Description field
 
 **DO:**
 - Use **Read tool** to check CLAUDE.md for Azure DevOps configuration
 - Simply output question text and STOP for Steps 1-6 (no tool calls)
 - Wait for user's response after each question before proceeding
 - Use **wit_add_child_work_items** MCP tool to create the story as a child of the feature
-- Use **wit_update_work_item** MCP tool to set Story Points after creation
-- Apply proper HTML formatting to description field
+- Use **wit_update_work_item** MCP tool to set both Story Points and Acceptance Criteria after creation
+- Apply proper HTML formatting to both description and acceptance criteria fields
+- Set Acceptance Criteria in the Microsoft.VSTS.Common.AcceptanceCriteria field (NOT in Description)
 - Use configuration values from CLAUDE.md
 - Show clear success message with story details
 - Provide helpful next steps and links

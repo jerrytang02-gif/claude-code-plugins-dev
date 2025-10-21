@@ -26,6 +26,10 @@ Interactively create a new User Story work item as a child of an existing Featur
 
 Interactively create a new Task work item as a child of an existing User Story, with hour estimation and lightweight task tracking. Supports both AI-powered generation and manual input modes.
 
+### `/ado-log-story-work`
+
+Rapidly log completed work to a User Story by creating a Task work item with completed hours already set. Designed for quick logging multiple times per day. Supports AI-powered generation with automatic git commit hash detection and optional placeholder task hour subtraction.
+
 **What it does:**
 
 - Collects your Azure DevOps organization, project, and team settings
@@ -199,6 +203,89 @@ Interactively create a new Task work item as a child of an existing User Story, 
 - Must have an existing User Story work item (create with `/ado-create-story`)
 - Azure DevOps MCP server must be configured and running
 
+### `/ado-log-story-work` Command Details
+
+**What it does:**
+
+- Validates Azure DevOps configuration exists in CLAUDE.md
+- Prompts for parent User Story ID to create hierarchy
+- Offers choice between AI-powered generation or manual input
+- **AI Mode**: Automatically detects git commit hashes in description and looks up commit details
+- **AI Mode**: Generates professional task title and description based on prompt and commit context
+- **Manual Mode**: Provide task title and description yourself
+- Creates Task as child of User Story with proper linking
+- Sets Original Estimate and Completed Work to the same value
+- Leaves Remaining Work empty (work is already complete)
+- Optionally subtracts hours from a placeholder task's Original Estimate and Remaining Work
+- Displays comprehensive success message with task and optional placeholder task details
+
+**Usage (AI Mode):**
+
+```
+/ado-log-story-work
+
+# Provide parent User Story ID
+# Choose: AI
+# Describe the completed work (optionally include a git commit hash)
+# ✨ AI automatically detects commit hash (full or short SHA)
+# ✨ AI runs git show to retrieve commit details (message, files changed)
+# ✨ AI generates professional task title based on description and commit
+# ✨ AI generates task description with commit context (both full and short SHA)
+# ✨ Review and confirm or override each generated field
+# ✨ Provide completed hours
+# ✨ Choose whether to subtract hours from placeholder task
+#    - If yes, provide placeholder task ID
+#    - AI retrieves current placeholder values
+#    - AI calculates and updates new values
+# ✨ Creates Task with completed work logged
+# ✨ Shows success message with task and optional placeholder updates
+# ✅ Done!
+```
+
+**Usage (Manual Mode):**
+
+```
+/ado-log-story-work
+
+# Provide parent User Story ID
+# Choose: Manual
+# You'll be prompted for:
+# - Task title (e.g., "Implement authentication endpoints")
+# - Task description (e.g., "Added JWT token validation and refresh logic")
+# - Completed hours (e.g., 3.5)
+# - Subtract from placeholder? (yes/no)
+#    - If yes: Placeholder task ID (e.g., 456)
+
+# ✨ Creates Task with completed work logged
+# ✨ Optionally updates placeholder task hours
+# ✨ Shows Azure DevOps URLs for immediate viewing
+# ✅ Done!
+```
+
+**Git Commit Hash Detection:**
+
+The command automatically detects git commit hashes in your description:
+- Supports both full SHA (40 characters) and short SHA (7+ characters)
+- Common patterns: "commit abc123", "see commit 1a2b3c4", "hash: def456789"
+- Runs `git show` to retrieve commit message and file changes
+- Includes commit details in generated task description
+- If git lookup fails, continues without commit context (non-blocking)
+
+**Placeholder Task Hour Subtraction:**
+
+When logging completed work, you can optionally subtract hours from a placeholder task:
+- Useful for tracking hours from a pre-allocated hour bucket
+- Subtracts from both "Original Estimate" and "Remaining Work" fields
+- Calculates new values automatically (prevents negative values)
+- Shows before/after comparison in success message
+- Displays both task and placeholder task Azure DevOps links
+
+**Requirements:**
+- Must run `/ado-init` first to configure Azure DevOps settings
+- Must have an existing User Story work item (create with `/ado-create-story`)
+- Azure DevOps MCP server must be configured and running
+- Git repository accessible (optional, for commit hash lookup)
+
 ---
 
 ## 🚀 Quick Start
@@ -248,6 +335,10 @@ Interactively create a new Task work item as a child of an existing User Story, 
 
 /ado-create-task
 # Creates a Task under a User Story
+
+# Step 3: Log completed work to user stories
+/ado-log-story-work
+# Rapidly log completed work with hours already set
 ```
 
 ---
@@ -272,12 +363,13 @@ All work item creation commands (`/ado-create-feature`, `/ado-create-story`, `/a
 
 ### Core Commands
 
-The plugin provides four slash commands for complete Azure DevOps work item lifecycle management:
+The plugin provides five slash commands for complete Azure DevOps work item lifecycle management:
 
 1. **`/ado-init`**: Initialize Azure DevOps configuration with organization settings
 2. **`/ado-create-feature`**: Create Feature work items with AI or manual input
 3. **`/ado-create-story`**: Create User Story work items with AI-generated structured content
 4. **`/ado-create-task`**: Create Task work items with AI-generated titles
+5. **`/ado-log-story-work`**: Rapidly log completed work with git commit detection and placeholder hour tracking
 
 ### `/ado-init` Command
 
@@ -505,9 +597,9 @@ Future commands and features planned for this plugin:
 ## 📦 Plugin Details
 
 - **Name:** AI-ADO Plugin
-- **Version:** 1.0.0
+- **Version:** 1.1.0
 - **Type:** AI Instruction Plugin (Slash Commands)
-- **Commands:** `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`
+- **Commands:** `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`, `/ado-log-story-work`
 - **MCP Integration:** Microsoft Azure DevOps MCP Server (optional, OS-aware configuration)
 - **Requirements:** Node.js 20+
 - **License:** MIT

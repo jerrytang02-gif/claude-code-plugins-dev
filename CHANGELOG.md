@@ -25,6 +25,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - AI analyzes CLAUDE.md configuration for naming conventions and standards
   - Context-aware generation retrieves parent work item details for better quality
 
+- `/ado-log-story-work` command for rapid logging of completed work to User Stories
+  - Creates Task work items with completed hours already set
+  - AI-powered or manual task title and description generation
+  - Automatic git commit hash detection and lookup for enhanced context
+  - Sets both "Original Estimate" and "Completed Work" fields (leaves "Remaining Work" empty)
+  - Optional placeholder task hour subtraction feature
+  - Subtracts hours from placeholder task's "Original Estimate" and "Remaining Work" fields
+  - Designed for multiple daily work logging sessions
+  - Displays comprehensive success message with task and placeholder task details
+
 #### AI-Security Plugin (v1.2.0)
 
 - **Hybrid Agent + Skill Architecture** for optimal context efficiency
@@ -79,6 +89,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Eliminates context overhead in every conversation when agent isn't used
   - Enables flexible usage: skill for interactive work, agent for fresh context
   - Provides full 200K token budget when launching agent for large codebases
+
+### Fixed
+
+#### AI-ADO Plugin (v1.1.0)
+
+- **Corrected Acceptance Criteria field handling in `/ado-create-story` command**
+  - Fixed issue where acceptance criteria was incorrectly included in Description field
+  - Now properly sets acceptance criteria in the dedicated `Microsoft.VSTS.Common.AcceptanceCriteria` field
+  - Description field now correctly contains only persona statement and background information
+  - Both Story Points and Acceptance Criteria are set in a single `wit_update_work_item` operation
 
 ## [1.2.0] - 2025-10-20
 

@@ -11,6 +11,28 @@
   },
   "plugins": [
     {
+      "name": "ai-ado",
+      "source": "./plugins/ai-ado",
+      "description": "AI-powered Azure DevOps integration with skills - Intelligent work item management, configuration, and automation for Azure DevOps workflows with MCP integration",
+      "version": "1.1.0",
+      "keywords": [
+        "ai",
+        "azure-devops",
+        "ado",
+        "devops",
+        "work-items",
+        "automation",
+        "productivity",
+        "mcp",
+        "integration"
+      ],
+      "author": {
+        "name": "Charles Jones",
+        "url": "https://charlesjones.dev"
+      },
+      "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev"
+    },
+    {
       "name": "ai-git",
       "source": "./plugins/ai-git",
       "description": "AI-powered git automation - Intelligent git commands and agents that streamline version control workflows with .gitignore generation",
@@ -24,29 +46,6 @@
         "productivity",
         "devops",
         "version-control"
-      ],
-      "author": {
-        "name": "Charles Jones",
-        "url": "https://charlesjones.dev"
-      },
-      "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev"
-    },
-    {
-      "name": "ai-security",
-      "source": "./plugins/ai-security",
-      "description": "AI-powered security auditing - Interactive security audit skill and automated agent with comprehensive vulnerability detection and reporting",
-      "version": "1.2.0",
-      "keywords": [
-        "ai",
-        "security",
-        "compliance",
-        "auditing",
-        "auditor",
-        "vulnerability",
-        "owasp",
-        "scanning",
-        "defensive",
-        "skills"
       ],
       "author": {
         "name": "Charles Jones",
@@ -96,20 +95,21 @@
       "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev"
     },
     {
-      "name": "ai-ado",
-      "source": "./plugins/ai-ado",
-      "description": "AI-powered Azure DevOps integration with skills - Intelligent work item management, configuration, and automation for Azure DevOps workflows with MCP integration",
-      "version": "1.1.0",
+      "name": "ai-security",
+      "source": "./plugins/ai-security",
+      "description": "AI-powered security auditing - Interactive security audit skill and automated agent with comprehensive vulnerability detection and reporting",
+      "version": "1.2.0",
       "keywords": [
         "ai",
-        "azure-devops",
-        "ado",
-        "devops",
-        "work-items",
-        "automation",
-        "productivity",
-        "mcp",
-        "integration"
+        "security",
+        "compliance",
+        "auditing",
+        "auditor",
+        "vulnerability",
+        "owasp",
+        "scanning",
+        "defensive",
+        "skills"
       ],
       "author": {
         "name": "Charles Jones",
