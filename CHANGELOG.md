@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+#### AI-ADO Plugin (v1.1.0)
+
+- **AI-Powered Work Item Generation** for all work item creation commands
+  - `/ado-create-feature`, `/ado-create-story`, and `/ado-create-task` now support AI-powered generation mode
+  - Users can choose between AI generation or manual input for each work item
+  - AI generates professional content based on user description:
+    - Features: Titles and comprehensive descriptions following naming conventions
+    - User Stories: Titles, persona statements (As a... I want to... so that...), background information, and acceptance criteria (Given/When/Then format)
+    - Tasks: Descriptive titles focused on work to be done
+  - Review and confirmation workflow for all AI-generated content
+  - Users can override any AI-generated field with custom text
+  - AI analyzes CLAUDE.md configuration for naming conventions and standards
+  - Context-aware generation retrieves parent work item details for better quality
+
 #### AI-Security Plugin (v1.2.0)
 
 - **Hybrid Agent + Skill Architecture** for optimal context efficiency

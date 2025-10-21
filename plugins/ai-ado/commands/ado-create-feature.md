@@ -46,7 +46,76 @@ Before proceeding with feature creation, verify that Azure DevOps configuration 
 
 ### Phase 2: Gather Feature Information
 
-Collect feature details from the user in a sequential flow. Ask for each value and wait for the user's response before proceeding to the next.
+Collect feature details from the user. The user can choose between AI-powered generation or manual input.
+
+**Step 0 - Choose Input Method:**
+
+Simply output the following text as your response message and STOP (DO NOT call any tools):
+
+"Would you like to use AI to generate the Feature details, or provide them manually?
+
+Options:
+1. AI-powered: Provide a description and let AI generate the title and description
+2. Manual: Provide title and description yourself
+
+Please respond with 'AI' or 'Manual'."
+
+Wait for the user's response before proceeding.
+
+**If user chooses 'AI' (or similar affirmative response):**
+
+**Step AI-1 - Get Description Prompt:**
+
+Simply output the following text as your response message and STOP:
+
+"Please provide a description or overview of what this Feature should accomplish. I'll use this to generate a professional title and detailed description.
+
+(Provide as much context as you'd like - the more detail you provide, the better the generated content will be.)"
+
+Wait for the user's description, then:
+
+1. Analyze the naming convention from Phase 1 configuration
+2. Generate a professional Feature title following the naming convention (e.g., "1: Feature Name" for decimal notation)
+3. Generate a comprehensive feature description that:
+   - Summarizes the feature's purpose
+   - Describes what user stories it will contain
+   - Provides an overview without excessive fine details
+   - Is clear and suitable for stakeholders
+
+**Step AI-2 - Confirm Generated Title:**
+
+Display the generated title and ask for confirmation:
+
+"I've generated the following title based on your description:
+
+**Title:** [GENERATED_TITLE]
+
+Would you like to use this title, or would you prefer to provide your own?
+(Type 'yes' to use this title, or provide an alternative title)"
+
+Wait for response:
+- If user approves (says "yes", "ok", "looks good", etc.), store the generated title
+- If user provides alternative text, use that as the title instead
+
+**Step AI-3 - Confirm Generated Description:**
+
+Display the generated description and ask for confirmation:
+
+"I've generated the following description:
+
+**Description:**
+[GENERATED_DESCRIPTION]
+
+Would you like to use this description, or would you prefer to provide your own?
+(Type 'yes' to use this description, or provide an alternative description)"
+
+Wait for response:
+- If user approves (says "yes", "ok", "looks good", etc.), store the generated description
+- If user provides alternative text, use that as the description instead
+
+Then proceed to Phase 3 with the final values.
+
+**If user chooses 'Manual':**
 
 **Step 1 - Feature Title:**
 
@@ -69,9 +138,11 @@ After receiving the feature title, simply output the following text as your resp
 Wait for the user's next message with the feature description before proceeding.
 
 **IMPORTANT**:
-- Simply output the question text in your response message and STOP - do NOT call ANY tools
+- Simply output the question text in your response message and STOP - do NOT call ANY tools (except when generating AI content)
 - DO NOT use the AskUserQuestion tool for any of these steps
 - After outputting each question, wait for the user's next message before proceeding
+- For AI mode: Generate content intelligently based on user's description and naming conventions
+- For AI mode: Always confirm generated content and allow user to override
 - Validate that title and description are provided (not empty)
 
 ### Phase 3: Create Feature Work Item

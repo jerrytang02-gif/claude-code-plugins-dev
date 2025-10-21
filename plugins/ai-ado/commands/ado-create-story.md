@@ -46,7 +46,125 @@ Before proceeding with user story creation, verify that Azure DevOps configurati
 
 ### Phase 2: Gather User Story Information
 
-Collect user story details from the user in a sequential flow. Ask for each value and wait for the user's response before proceeding to the next.
+Collect user story details from the user. The user can choose between AI-powered generation or manual input.
+
+**Step 0 - Choose Input Method:**
+
+Simply output the following text as your response message and STOP (DO NOT call any tools):
+
+"Would you like to use AI to generate the User Story details, or provide them manually?
+
+Options:
+1. AI-powered: Provide a description and let AI generate the title, persona statement, background, and acceptance criteria
+2. Manual: Provide each field yourself
+
+Please respond with 'AI' or 'Manual'."
+
+Wait for the user's response before proceeding.
+
+**If user chooses 'AI' (or similar affirmative response):**
+
+**Step AI-0 - Get Parent Feature ID:**
+
+Simply output the following text as your response message and STOP (DO NOT call any tools):
+
+"What is the ID of the parent Feature for this User Story?
+
+(This is the numeric ID of the Feature work item that will contain this story. You can find this in Azure DevOps or from the output of /ado-create-feature)"
+
+Wait for the user's next message with the parent feature ID before proceeding.
+
+**Step AI-1 - Get Description Prompt:**
+
+Simply output the following text as your response message and STOP:
+
+"Please provide a description or overview of what this User Story should accomplish. I'll use this to generate a professional title, persona statement, background information, and acceptance criteria.
+
+(Provide as much context as you'd like - the more detail you provide, the better the generated content will be.)"
+
+Wait for the user's description, then:
+
+1. Analyze the naming convention from Phase 1 configuration
+2. Generate a professional User Story title following the naming convention (e.g., "1.1: Story Name" for decimal notation)
+3. Generate a user persona statement in the format: "As a [role], I want to [action] so that [benefit]"
+4. Generate relevant background information with technical details and constraints (formatted as bullet points)
+5. Generate comprehensive acceptance criteria using "Given, When, Then" format with multiple scenarios if appropriate
+
+**Step AI-2 - Confirm Generated Title:**
+
+Display the generated title and ask for confirmation:
+
+"I've generated the following title based on your description:
+
+**Title:** [GENERATED_TITLE]
+
+Would you like to use this title, or would you prefer to provide your own?
+(Type 'yes' to use this title, or provide an alternative title)"
+
+Wait for response:
+- If user approves (says "yes", "ok", "looks good", etc.), store the generated title
+- If user provides alternative text, use that as the title instead
+
+**Step AI-3 - Confirm Generated Persona Statement:**
+
+Display the generated persona statement and ask for confirmation:
+
+"I've generated the following user persona statement:
+
+**Persona Statement:**
+[GENERATED_PERSONA]
+
+Would you like to use this persona statement, or would you prefer to provide your own?
+(Type 'yes' to use this statement, or provide an alternative)"
+
+Wait for response:
+- If user approves, store the generated persona statement
+- If user provides alternative text, use that instead
+
+**Step AI-4 - Confirm Generated Background:**
+
+Display the generated background and ask for confirmation:
+
+"I've generated the following background information:
+
+**Background:**
+[GENERATED_BACKGROUND]
+
+Would you like to use this background information, or would you prefer to provide your own?
+(Type 'yes' to use this background, 'none' to skip background, or provide alternative background information)"
+
+Wait for response:
+- If user approves, store the generated background
+- If user says 'none', mark background as skipped
+- If user provides alternative text, use that instead
+
+**Step AI-5 - Confirm Generated Acceptance Criteria:**
+
+Display the generated acceptance criteria and ask for confirmation:
+
+"I've generated the following acceptance criteria:
+
+**Acceptance Criteria:**
+[GENERATED_CRITERIA]
+
+Would you like to use these acceptance criteria, or would you prefer to provide your own?
+(Type 'yes' to use these criteria, or provide alternative acceptance criteria)"
+
+Wait for response:
+- If user approves, store the generated acceptance criteria
+- If user provides alternative text, use that instead
+
+**Step AI-6 - Story Points:**
+
+Simply output the following text as your response message and STOP:
+
+"What is the Story Points estimate for this User Story?
+
+(Use Fibonacci sequence values: 1, 2, 3, 5, 8, 13, 21, etc.)"
+
+Wait for the user's next message with story points before proceeding to Phase 3.
+
+**If user chooses 'Manual':**
 
 **Step 1 - Parent Feature ID:**
 
@@ -114,9 +232,12 @@ After receiving the acceptance criteria, simply output the following text as you
 Wait for the user's next message with story points before proceeding.
 
 **IMPORTANT**:
-- Simply output the question text in your response message and STOP - do NOT call ANY tools
+- Simply output the question text in your response message and STOP - do NOT call ANY tools (except when generating AI content)
 - DO NOT use the AskUserQuestion tool for any of these steps
 - After outputting each question, wait for the user's next message before proceeding
+- For AI mode: Generate content intelligently based on user's description and naming conventions
+- For AI mode: Always confirm generated content and allow user to override
+- For AI mode: Parent Feature ID is still required before generating other content
 - Validate that required fields are provided (not empty)
 - Parent Feature ID must be a valid number
 
