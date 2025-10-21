@@ -1,5 +1,11 @@
 # Claude Code Plugins for Developers
 
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/releases)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/charlesjones-dev/claude-code-plugins-dev.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/charlesjones-dev/claude-code-plugins-dev.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/stargazers)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/graphs/commit-activity)
+
 A curated list of custom Claude Code plugins, agents, and skills for developers.
 
 ## 🎯 Overview
