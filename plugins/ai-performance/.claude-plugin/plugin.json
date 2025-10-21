@@ -1,7 +1,7 @@
 {
   "name": "ai-performance",
-  "version": "1.0.0",
-  "description": "AI-powered performance optimization - Intelligent performance analysis and bottleneck detection with comprehensive reporting",
+  "version": "1.1.0",
+  "description": "AI-powered performance optimization - Interactive performance audit skill and automated agent with comprehensive bottleneck detection and optimization",
   "author": {
     "name": "Charles Jones",
     "url": "https://charlesjones.dev"
@@ -13,6 +13,7 @@
     "optimization",
     "analysis",
     "bottleneck",
-    "scalability"
+    "scalability",
+    "skills"
   ]
 }

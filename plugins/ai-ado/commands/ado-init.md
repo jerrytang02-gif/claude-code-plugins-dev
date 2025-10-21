@@ -1,10 +1,10 @@
 # Azure DevOps Init
 
-Initialize Azure DevOps configuration by creating or updating `CLAUDE.md` with intelligent Azure DevOps guidelines, work item conventions, and MCP tool usage rules.
+Initialize Azure DevOps configuration by creating or updating `CLAUDE.md` with your organization, project, and team settings, and optionally configuring the Azure DevOps MCP server.
 
 ## Instructions
 
-Configure CLAUDE.md with Azure DevOps-specific rules that guide Claude Code when working with the Microsoft Azure DevOps MCP server tools, ensuring consistent work item creation and management within your organization's conventions.
+Configure CLAUDE.md with Azure DevOps-specific settings that guide Claude Code when working with the Microsoft Azure DevOps MCP server tools. Detailed work item creation guidelines are provided by the `ado-work-items` skill.
 
 ### Phase 1: Gather Azure DevOps Configuration
 
@@ -38,7 +38,7 @@ Wait for the user's next message with their team name before proceeding.
 
 After receiving the team name, simply output the following text as your response message and STOP (DO NOT call any tools):
 
-"What is your default Area Path for work items? (This determines where work items are organized. Suggested format: `[PROJECT]\Team\[TEAM]`, or leave blank to use the default)"
+"What is your default Area Path for work items? (This determines where work items are organized. Suggested format: `[PROJECT]\\Team\\[TEAM]`, or leave blank to use the default)"
 
 Wait for the user's next message with their area path (or blank) before proceeding.
 
@@ -46,7 +46,7 @@ Wait for the user's next message with their area path (or blank) before proceedi
 
 After receiving the area path, simply output the following text as your response message and STOP (DO NOT call any tools):
 
-"What is your default Iteration Path for work items? (This determines which sprint/iteration work items belong to. Suggested format: `[PROJECT]\Sprint 1`, or leave blank to use the default)"
+"What is your default Iteration Path for work items? (This determines which sprint/iteration work items belong to. Suggested format: `[PROJECT]\\Sprint 1`, or leave blank to use the default)"
 
 Wait for the user's next message with their iteration path (or blank) before proceeding.
 
@@ -95,8 +95,8 @@ If the user answered "no" to Step 7, skip Step 8 entirely and proceed to Phase 2
 - For Step 8 (if applicable), expect the user to type "windows" or "linux"
 - Validate that organization, project, and team names are provided (not empty)
 - If Area Path or Iteration Path are empty, apply defaults:
-  - Area Path default: `[PROJECT]\Team\[TEAM]`
-  - Iteration Path default: `[PROJECT]\Sprint 1`
+  - Area Path default: `[PROJECT]\\Team\\[TEAM]`
+  - Iteration Path default: `[PROJECT]\\Sprint 1`
 - Store all collected values (including OS choice) for use in Phase 2A and Phase 3
 
 ### Phase 2A: Handle MCP Configuration
@@ -250,123 +250,35 @@ Check if `CLAUDE.md` already exists and contains an Azure DevOps section using t
 
 ### Phase 3: Build Azure DevOps Configuration Section
 
-Using the values collected in Phase 1, build the Azure DevOps configuration section with the following structure:
+Using the values collected in Phase 1, build a simplified Azure DevOps configuration section:
 
 ```markdown
 ## Azure DevOps
 
-Azure DevOps MCP tools are authorized for use in this project. When utilizing Azure DevOps MCP tools, specify the organization as "[ORGANIZATION]", the project as "[PROJECT]", and the team as "[TEAM]". All work items (Features, User Stories, and Tasks) should have the "Area Path" set to "[AREA_PATH]", the "Iteration Path" set to "[ITERATION_PATH]", and the "State" set to "New".
+Azure DevOps MCP tools are authorized for use in this project. When utilizing Azure DevOps MCP tools, use the following configuration:
 
-### Backlog Item Creation Guidelines
+**Organization:** [ORGANIZATION]
+**Project:** [PROJECT]
+**Team:** [TEAM]
+**Area Path:** [AREA_PATH]
+**Iteration Path:** [ITERATION_PATH]
+**Naming Convention:** [NAMING_CONVENTION_DESCRIPTION]
 
-#### Work Item Hierarchy
+All work items (Features, User Stories, and Tasks) should have the "State" set to "New" unless otherwise specified.
 
-Follow this three-level structure when creating work items:
-
-1. **Features** (top level)
-2. **User Stories** (child of Features)
-3. **Tasks** (child of User Stories)
-
-When creating any work items, ensure proper HTML formatting is applied to all text fields (e.g., Description, Acceptance Criteria) for correct styling and readability.
-
-#### Feature Requirements
-
-Features should include a simple, high-level Description that summarizes the user stories contained within it. This description should provide an overview without fine details about individual user stories.
-
-#### User Story Requirements
-
-**Structure:**
-
-- Each Feature should contain one or more child User Stories
-- Each User Story should contain one or more child Task items
-- User Story should remain unassigned—team member assignments will be handled manually
-
-**Description Field Format:**
-
-- Begin with a concise user persona statement (e.g., "As a developer..." or "As a website visitor...")
-- Include a "Background" section providing relevant context
-- Add any additional information valuable for task completion
-- Use bullet points wherever possible for clarity
-
-**Acceptance Criteria Format:**
-
-- Follow the "Given, When, Then" format
-- Keep criteria concise and easily consumable for QA testers
-- Structure content using bullet points for improved readability
-
-#### Task Requirements
-
-Tasks are lightweight work tracking items that serve as containers for hour estimates and work effort.
-
-**Structure:**
-
-- Each User Story should contain one or more child Tasks
-- Task titles should be simple and descriptive
-- Tasks should not contain Description or Acceptance Criteria fields—they should always reference the parent User Story for context
-- Tasks should remain unassigned—team member assignments will be handled manually
-
-### Hour Estimation and Tracking
-
-Tasks serve as the primary container for hour tracking within user stories:
-
-- **User Stories:** Apply Fibonacci sequence values to the "Story Points" field
-- **Tasks:**
-  - Assign hour estimates to both "Original Estimate" and "Remaining Work" fields (use identical values)
-  - Leave the "Completed Work" field empty initially
-
-### Naming Convention Standards
-
-Maintain consistent naming to ensure proper organization, as Azure DevOps lacks robust priority sorting:
-
-**Features:**
-
-- Prefix with a single digit from 1-99 (e.g., "1: Feature One", "2: Feature Two")
-
-[NAMING_CONVENTION_SECTION]
+**Work Item Guidelines:** Detailed guidelines for creating Features, User Stories, and Tasks (including hierarchy, HTML formatting, acceptance criteria, hour estimation, and naming conventions) are provided by the `ado-work-items` skill. This skill is automatically loaded when working with Azure DevOps MCP tools.
 ```
 
-**Naming Convention Section Variations:**
+**Naming Convention Description Values:**
 
 If user selected "Yes, use decimals":
-```markdown
-**User Stories:**
-
-- Use decimal notation incorporating the parent Feature number
-- Examples:
-  - "1.1: Feature One User Story One"
-  - "1.2: Feature One User Story Two"
-  - "2.1: Feature Two User Story One"
-
-**Tasks:**
-
-- Use descriptive titles without numbering
-- Examples:
-  - "Development for Feature One User Story One Task One"
-  - "QA for Feature Two User Story Two"
-  - "Deployment for User Story Three"
-
-This hierarchical naming scheme ensures items remain properly ordered within the backlog.
+```
+Decimal notation (Features: 1, 2, 3; User Stories: 1.1, 1.2, 2.1; Tasks: descriptive names)
 ```
 
 If user selected "No, simple names":
-```markdown
-**User Stories:**
-
-- Use descriptive titles without decimal notation
-- Examples:
-  - "Create user authentication system"
-  - "Implement dashboard analytics"
-  - "Add export functionality"
-
-**Tasks:**
-
-- Use simple, descriptive titles focused on the work to be done
-- Examples:
-  - "Develop authentication API endpoints"
-  - "Create login UI components"
-  - "Write unit tests for auth flow"
-
-This flexible naming approach allows for clear, descriptive work item titles without strict numbering conventions.
+```
+Simple descriptive names (Features: numbered 1-99; User Stories and Tasks: descriptive names)
 ```
 
 **Template Variable Replacements:**
@@ -375,7 +287,7 @@ This flexible naming approach allows for clear, descriptive work item titles wit
 - `[TEAM]` → User's team name
 - `[AREA_PATH]` → User's area path
 - `[ITERATION_PATH]` → User's iteration path
-- `[NAMING_CONVENTION_SECTION]` → Appropriate naming convention based on user choice
+- `[NAMING_CONVENTION_DESCRIPTION]` → Appropriate description based on user choice
 
 ### Phase 4: Write or Update CLAUDE.md
 
@@ -425,12 +337,15 @@ Configuration Summary:
 📝 Naming Convention: [Decimal notation | Simple descriptive names]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Work Item Guidelines Configured:
+Work Item Guidelines:
+The ado-work-items skill provides comprehensive guidelines for:
 ✓ Three-level hierarchy (Features → User Stories → Tasks)
 ✓ HTML formatting requirements for text fields
 ✓ Description and Acceptance Criteria templates
 ✓ Hour estimation and Story Points guidelines
 ✓ Naming convention standards
+
+The skill is automatically loaded when you work with Azure DevOps MCP tools.
 
 Next Steps:
 1. Review the generated CLAUDE.md Azure DevOps section
@@ -439,14 +354,15 @@ Next Steps:
    📖 Visit https://github.com/microsoft/azure-devops-mcp for detailed instructions
    You'll need to create a Personal Access Token (PAT) with appropriate permissions
 4. [If MCP was configured] Restart Claude Code for the MCP server to take effect
-5. Use Azure DevOps MCP tools with your configured defaults
+5. Use Azure DevOps MCP tools - the ado-work-items skill will provide guidance
 
 💡 Azure DevOps MCP Server: https://github.com/microsoft/azure-devops-mcp
 💡 Node.js Download: https://nodejs.org/
 
 💡 Tip: All Azure DevOps MCP work item operations will now automatically
    use these organization, project, and team settings unless explicitly
-   overridden.
+   overridden. Work item creation guidelines will be provided by the
+   ado-work-items skill.
 ```
 
 ### Important Constraints
@@ -457,12 +373,13 @@ Next Steps:
 - Use bash commands for file operations
 - Create the Azure DevOps section without user confirmation
 - Include empty or placeholder values in the configuration
+- Include the full work item guidelines in CLAUDE.md (they belong in the skill)
 
 **DO:**
 - Use **Read tool** to check if CLAUDE.md exists and for Azure DevOps section
-- For Steps 1-6: Simply output the question text in your message and STOP (no tool calls)
+- For Steps 1-8: Simply output the question text in your message and STOP (no tool calls)
 - Wait for the user's next message after each question before proceeding
-- For Step 6 naming convention, expect the user to type "yes" or "no"
+- For Steps 6 and 7, expect the user to type "yes" or "no"
 - Use **Write tool** to create/update CLAUDE.md
 - Preserve all existing CLAUDE.md content when appending
 - Validate that required fields are provided
@@ -470,12 +387,13 @@ Next Steps:
 - Provide helpful next steps for using the configuration
 - Replace all template placeholders with actual user values
 - Use proper markdown formatting with appropriate spacing
+- Reference the ado-work-items skill for work item guidelines
 
 ### Additional Features
 
 **Default Values:**
-- If user doesn't provide Area Path, use: `[PROJECT]\Team\[TEAM]`
-- If user doesn't provide Iteration Path, use: `[PROJECT]\Sprint 1`
+- If user doesn't provide Area Path, use: `[PROJECT]\\Team\\[TEAM]`
+- If user doesn't provide Iteration Path, use: `[PROJECT]\\Sprint 1`
 
 **Validation:**
 - Ensure organization name doesn't contain special characters
@@ -484,3 +402,6 @@ Next Steps:
 
 **MCP Integration Note:**
 If the user chose to configure MCP (.mcp.json was created or snippet was shown), include a reminder in the success message to restart Claude Code for the MCP server configuration to take effect.
+
+**Skill Integration:**
+The simplified CLAUDE.md section references the `ado-work-items` skill for detailed work item creation guidelines. This skill is automatically loaded when Claude detects Azure DevOps MCP tool usage, providing just-in-time expert guidance without cluttering the project's CLAUDE.md file.
