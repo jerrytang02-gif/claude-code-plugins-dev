@@ -4,7 +4,7 @@ Generate a summarized report of hours logged from work items during a specified 
 
 ## Instructions
 
-This command queries Azure DevOps for work items based on flexible filtering criteria (closed, worked on, or both) during a specified time period and generates a timesheet report showing the "Completed Work" hours rolled up in a hierarchical tree.
+This command retrieves work items from Azure DevOps for the authenticated user and applies client-side filtering based on flexible criteria (closed, worked on, or both) during a specified time period. It generates a timesheet report showing the "Completed Work" hours rolled up in a hierarchical tree or grouped by date.
 
 ### Phase 1: Validate Azure DevOps Configuration
 
@@ -14,7 +14,7 @@ Before proceeding with report generation, verify that Azure DevOps configuration
 2. If the file doesn't exist OR doesn't contain an "## Azure DevOps" section:
    - Display the following error message:
      ```
-     ❌ Azure DevOps configuration not found
+     ❌ Azure DevOps configur ation not found
 
      CLAUDE.md does not contain Azure DevOps configuration.
 
@@ -57,12 +57,12 @@ Use the **AskUserQuestion tool** to ask all report configuration questions at on
       "multiSelect": false,
       "options": [
         {
-          "label": "Monday-Sunday",
-          "description": "ISO standard week (Monday through Sunday)"
-        },
-        {
           "label": "Sunday-Saturday",
           "description": "Sunday through Saturday week"
+        },
+        {
+          "label": "Monday-Sunday",
+          "description": "ISO standard week (Monday through Sunday)"
         }
       ]
     },
@@ -169,12 +169,12 @@ After handling the optional end date, use the **AskUserQuestion tool** to ask di
       "multiSelect": false,
       "options": [
         {
-          "label": "By hierarchy",
-          "description": "Group by Feature > User Story > Task (traditional tree view)"
-        },
-        {
           "label": "By date",
           "description": "Group by day of the week with work items under each date"
+        },
+        {
+          "label": "By hierarchy",
+          "description": "Group by Feature > User Story > Task (traditional tree view)"
         },
         {
           "label": "By date with hierarchy",
@@ -251,41 +251,76 @@ Based on the user's time period selection and week definition, calculate the sta
 
 2. **Calculate date range** based on user selections:
 
+   **Step 1: Determine today's day of the week using system commands**
+
+   Use the **Bash tool** to execute a platform-specific command. Check the platform from `<env>`:
+
+   - **If platform is `win32` (Windows)**:
+     Execute PowerShell command using the **Bash tool**:
+     ```bash
+     powershell -Command "(Get-Date 'YYYY-MM-DD').DayOfWeek.value__"
+     ```
+     Replace `YYYY-MM-DD` with today's date from `<env>`.
+
+     This returns a number 0-6 where:
+     - 0 = Sunday
+     - 1 = Monday
+     - 2 = Tuesday
+     - 3 = Wednesday
+     - 4 = Thursday
+     - 5 = Friday
+     - 6 = Saturday
+
+   - **If platform is `darwin` (Mac) or `linux`**:
+     Execute bash command:
+     ```bash
+     date -d "YYYY-MM-DD" +%u
+     ```
+     Replace `YYYY-MM-DD` with today's date from `<env>`.
+
+     This returns a number 1-7 where:
+     - 1 = Monday
+     - 2 = Tuesday
+     - 3 = Wednesday
+     - 4 = Thursday
+     - 5 = Friday
+     - 6 = Saturday
+     - 7 = Sunday
+
+   **Step 2: Calculate the date range based on the day of week value**
+
    **For "Current week":**
 
-   Use the following algorithm to calculate the current week:
+   - **If week is Monday-Sunday**:
+     - **On Windows** (day_of_week is 0-6):
+       - If day_of_week = 1 (Monday): days_to_subtract = 0
+       - If day_of_week = 2 (Tuesday): days_to_subtract = 1
+       - If day_of_week = 3 (Wednesday): days_to_subtract = 2
+       - If day_of_week = 4 (Thursday): days_to_subtract = 3
+       - If day_of_week = 5 (Friday): days_to_subtract = 4
+       - If day_of_week = 6 (Saturday): days_to_subtract = 5
+       - If day_of_week = 0 (Sunday): days_to_subtract = 6
+     - **On Mac/Linux** (day_of_week is 1-7):
+       - days_to_subtract = day_of_week - 1
+     - Start date = Today - days_to_subtract (this gives you the Monday of the current week)
+     - End date = Start date + 6 days (this gives you the Sunday of the current week)
 
-   - If week is Monday-Sunday:
-     1. Determine today's day of the week (Monday=1, Tuesday=2, Wednesday=3, Thursday=4, Friday=5, Saturday=6, Sunday=7)
-     2. Calculate days to subtract from today to get to Monday: (day_of_week - 1)
-        - If today is Monday (day_of_week=1): subtract 0 days (today is the start)
-        - If today is Tuesday (day_of_week=2): subtract 1 day
-        - If today is Wednesday (day_of_week=3): subtract 2 days
-        - If today is Thursday (day_of_week=4): subtract 3 days
-        - If today is Friday (day_of_week=5): subtract 4 days
-        - If today is Saturday (day_of_week=6): subtract 5 days
-        - If today is Sunday (day_of_week=7): subtract 6 days
-     3. Start date = Today - days_to_subtract (this gives you the Monday of the current week)
-     4. End date = Start date + 6 days (this gives you the Sunday of the current week)
-
-   - If week is Sunday-Saturday:
-     1. Determine today's day of the week (Sunday=0, Monday=1, Tuesday=2, Wednesday=3, Thursday=4, Friday=5, Saturday=6)
-     2. Calculate days to subtract from today to get to Sunday: day_of_week
-        - If today is Sunday (day_of_week=0): subtract 0 days (today is the start)
-        - If today is Monday (day_of_week=1): subtract 1 day
-        - If today is Tuesday (day_of_week=2): subtract 2 days
-        - If today is Wednesday (day_of_week=3): subtract 3 days
-        - If today is Thursday (day_of_week=4): subtract 4 days
-        - If today is Friday (day_of_week=5): subtract 5 days
-        - If today is Saturday (day_of_week=6): subtract 6 days
-     3. Start date = Today - days_to_subtract (this gives you the Sunday of the current week)
-     4. End date = Start date + 6 days (this gives you the Saturday of the current week)
+   - **If week is Sunday-Saturday**:
+     - **On Windows** (day_of_week is 0-6):
+       - days_to_subtract = day_of_week
+     - **On Mac/Linux** (day_of_week is 1-7):
+       - If day_of_week = 7 (Sunday): days_to_subtract = 0
+       - Otherwise: days_to_subtract = day_of_week
+     - Start date = Today - days_to_subtract (this gives you the Sunday of the current week)
+     - End date = Start date + 6 days (this gives you the Saturday of the current week)
 
    **Example for Monday-Sunday week:**
-   - If today is October 23, 2025 (Thursday):
-     - Day of week = 4 (Thursday)
-     - Days to subtract = 4 - 1 = 3 days
-     - Start date = Oct 23 - 3 days = October 20, 2025 (Monday)
+   - If today is October 24, 2025 (Friday):
+     - On Windows: PowerShell returns 5 (Friday)
+       - days_to_subtract = 4
+     - On Mac/Linux: bash returns 5 (Friday)
+       - days_to_subtract = 5 - 1 = 4
+     - Start date = Oct 24 - 4 days = October 20, 2025 (Monday)
      - End date = Oct 20 + 6 days = October 26, 2025 (Sunday)
      - **Result: October 20-26, 2025**
 
@@ -310,89 +345,78 @@ Based on the user's time period selection and week definition, calculate the sta
      - Validate that the end date is a Saturday
      - Start date: 6 days before the end date (the Sunday)
 
-3. **Format dates** in ISO 8601 format (YYYY-MM-DD) for use in WIQL queries
+3. **Format dates** in ISO 8601 format (YYYY-MM-DD) for use in client-side filtering
 
 **IMPORTANT**:
 - All date calculations should be done programmatically (don't ask user for date calculations)
-- **CRITICAL**: Follow the algorithm exactly as specified - do NOT add or subtract extra days
-  - For Monday-Sunday: Start = Today - (day_of_week - 1), End = Start + 6
-  - Verify your calculation matches the example: Oct 23 (Thu) → Oct 20-26 (Mon-Sun)
-- For specific week option, validate that the end date matches the expected day of week
+- **CRITICAL**: Use the Bash tool with platform-specific commands to determine day of week
+  - On Windows (platform: win32): `powershell -Command "(Get-Date 'YYYY-MM-DD').DayOfWeek.value__"` (returns 0-6)
+  - On Mac/Linux (platform: darwin/linux): `date -d "YYYY-MM-DD" +%u` (returns 1-7)
+  - DO NOT manually calculate day of week - the system command is authoritative
+- **CRITICAL**: Follow the lookup tables exactly for days_to_subtract calculation
+  - Windows and Mac/Linux use different numbering systems (0-6 vs 1-7)
+  - Verify your calculation matches the example: Oct 24 (Fri) → Oct 20-26 (Mon-Sun)
+- For specific week option, validate that the end date matches the expected day of week using the same system commands
 - If validation fails, display helpful error message and ask user to provide correct end date
 - Store calculated start_date and end_date for use in Phase 4
 
-### Phase 4: Query Azure DevOps for Work Items
+### Phase 4: Retrieve and Filter Work Items
 
-Query Azure DevOps for work items based on the user's filter choices:
+Retrieve work items from Azure DevOps and apply client-side filtering based on the user's filter choices:
 
-1. **Build WIQL query** dynamically based on Phase 2 selections:
-
-   **Base SELECT clause** (always include):
-   ```
-   SELECT [System.Id], [System.WorkItemType], [System.Title], [System.Description],
-          [System.Parent], [Microsoft.VSTS.Scheduling.CompletedWork],
-          [System.AssignedTo], [Microsoft.VSTS.Common.ClosedDate], [System.ChangedDate], [System.State]
-   FROM WorkItems
-   ```
-
-   **WHERE clause** - Build based on user's choices:
-
-   **Date Field Selection** (from Step 4):
-   - If user chose "Closed Date": Use `[Microsoft.VSTS.Common.ClosedDate]` as the date field
-   - If user chose "Changed Date": Use `[System.ChangedDate]` as the date field
-     - Note: If `System.ChangedDate` fails, try `[Microsoft.VSTS.Common.ChangedDate]` as an alternative
-
-   **Task Filter Type** (from Step 3):
-
-   **"Closed only" - Only closed tasks:**
-   ```
-   WHERE [System.TeamProject] = '[PROJECT]'
-     AND [System.State] = 'Closed'
-     AND [[DATE_FIELD]] >= '[START_DATE]T00:00:00.000Z'
-     AND [[DATE_FIELD]] <= '[END_DATE]T23:59:59.999Z'
-     AND [Microsoft.VSTS.Scheduling.CompletedWork] > 0
-   ```
-
-   **"Worked on only" - Only worked on (not closed) tasks:**
-   ```
-   WHERE [System.TeamProject] = '[PROJECT]'
-     AND [System.State] <> 'Closed'
-     AND [System.ChangedDate] >= '[START_DATE]T00:00:00.000Z'
-     AND [System.ChangedDate] <= '[END_DATE]T23:59:59.999Z'
-     AND [Microsoft.VSTS.Scheduling.CompletedWork] > 0
-   ```
-   Note: For this filter, always use ChangedDate regardless of user's date field choice, as non-closed tasks won't have a ClosedDate in the time period.
-
-   **"Both" - Both closed and worked on tasks:**
-   ```
-   WHERE [System.TeamProject] = '[PROJECT]'
-     AND [[DATE_FIELD]] >= '[START_DATE]T00:00:00.000Z'
-     AND [[DATE_FIELD]] <= '[END_DATE]T23:59:59.999Z'
-     AND [Microsoft.VSTS.Scheduling.CompletedWork] > 0
-   ```
-
-   **ORDER BY clause** (always include):
-   ```
-   ORDER BY [System.Parent] ASC, [System.WorkItemType] ASC, [System.Id] ASC
-   ```
-
-   Replace placeholders:
-   - `[PROJECT]` → Project name from Phase 1 configuration
-   - `[DATE_FIELD]` → `Microsoft.VSTS.Common.ClosedDate` or `System.ChangedDate` based on user choice
-   - `[START_DATE]` → Start date from Phase 3 (YYYY-MM-DD format)
-   - `[END_DATE]` → End date from Phase 3 (YYYY-MM-DD format)
-
-2. **Execute WIQL query** using the **wit_query** MCP tool:
-   - `wiql`: The WIQL query built in step 1
+1. **Retrieve work items** using the **wit_my_work_items** MCP tool:
    - `project`: Project name from Phase 1 configuration
+   - This returns all work items relevant to the authenticated user
+   - The response includes work item details with all necessary fields
 
-3. **Filter work items by user** (if specified):
-   - If user chose "Current user": Keep all work items assigned to the current authenticated user
-   - If user chose "Specific team member": Keep only work items assigned to the specified team member
-   - Check the `System.AssignedTo` field against the user selection
+2. **Resolve team member identity** (if "Specific team member" was selected):
+   - If user chose "Specific team member" in Phase 2:
+     - Use **core_get_identity_ids** MCP tool to resolve the team member's identity
+     - `uniqueNames`: Array containing the team member name from Phase 2 (e.g., `["John Smith"]`)
+     - Extract the identity ID from the response to match against AssignedTo fields
+   - If user chose "Current user":
+     - Skip this step and filter by current authenticated user
 
-4. **Extract work item data** from query results:
-   - For each work item, extract:
+3. **Filter work items client-side** based on user selections from Phase 2:
+
+   **Step 3a - Filter by Completed Work:**
+   - Keep only work items where `Microsoft.VSTS.Scheduling.CompletedWork` field exists and is greater than 0
+   - Work items without logged hours should be excluded
+
+   **Step 3b - Filter by User Assignment:**
+   - If "Current user" was selected:
+     - Keep work items assigned to the current authenticated user
+     - Compare `System.AssignedTo` field with current user identity
+   - If "Specific team member" was selected:
+     - Keep work items assigned to the resolved team member identity
+     - Compare `System.AssignedTo` field with the identity from step 2
+
+   **Step 3c - Determine Date Field to Use:**
+   - If user chose "Closed Date": Use `Microsoft.VSTS.Common.ClosedDate` field
+   - If user chose "Changed Date": Use `System.ChangedDate` field
+   - **Exception**: If task filter type is "Worked on only", always use `System.ChangedDate` regardless of user's date field choice (non-closed tasks won't have ClosedDate)
+
+   **Step 3d - Filter by Date Range:**
+   - Parse the date field value determined in Step 3c (format: "2025-10-23T14:30:00Z")
+   - **Extract only the date portion** (YYYY-MM-DD) by taking the first 10 characters or splitting on 'T'
+     - Example: "2025-10-23T14:30:00Z" → "2025-10-23"
+     - This ensures time of day doesn't affect the comparison
+   - Compare the extracted date string against START_DATE and END_DATE (also in YYYY-MM-DD format)
+   - Keep work items where: `date >= START_DATE AND date <= END_DATE` (inclusive on both ends)
+   - **CRITICAL**: Do NOT use full datetime comparison - only compare date portions
+     - Work items created/modified at any time during START_DATE should be included
+     - Work items created/modified at any time during END_DATE should be included
+   - Handle missing/null date fields gracefully:
+     - If date field is null/missing, exclude the work item
+     - This is common for work items that haven't been closed yet (when using ClosedDate)
+
+   **Step 3e - Filter by State (based on task filter type):**
+   - If "Closed only": Keep only work items where `System.State === 'Closed'`
+   - If "Worked on only": Keep only work items where `System.State !== 'Closed'`
+   - If "Both": Keep all work items regardless of state
+
+4. **Extract work item data** from filtered results:
+   - For each remaining work item, extract:
      - ID (`System.Id`)
      - Type (`System.WorkItemType`)
      - Title (`System.Title`)
@@ -400,28 +424,44 @@ Query Azure DevOps for work items based on the user's filter choices:
      - Parent ID (`System.Parent`)
      - Completed Work hours (`Microsoft.VSTS.Scheduling.CompletedWork`)
      - Assigned To (`System.AssignedTo`)
-     - Work Date - Extract the date field that was used in the query:
-       - If "Closed Date" filter was used: Extract `Microsoft.VSTS.Common.ClosedDate`
-       - If "Changed Date" filter was used: Extract `System.ChangedDate`
-       - Parse the date to get day of week (for date-based grouping)
+     - State (`System.State`)
+     - Work Date - The date field that was used for filtering:
+       - If "Closed Date" was used: Extract `Microsoft.VSTS.Common.ClosedDate`
+       - If "Changed Date" was used: Extract `System.ChangedDate`
+       - Parse the date to extract day of week (for date-based grouping)
 
-5. **Store work items** in a data structure for tree building
+5. **Sort work items**:
+   - Sort by Parent ID (ascending)
+   - Then by Work Item Type (ascending)
+   - Then by ID (ascending)
+   - This makes hierarchy building easier in Phase 5
+
+6. **Store filtered work items** in a data structure for tree building in Phase 5
 
 **IMPORTANT**:
-- Use **wit_query** MCP tool to execute the WIQL query
-- Build the WIQL query dynamically based on user's task filter type and date field choices
-- For "worked on only" filter, always use ChangedDate (override user's date field choice if needed)
-- **Critical**: Use the correct field name `Microsoft.VSTS.Common.ClosedDate` (NOT `System.ClosedDate`) for Closed Date
-- Dates must be in ISO 8601 format with time zone (use UTC: T00:00:00.000Z)
-- Always filter by CompletedWork > 0 to only include work items with logged hours
-- Filter by State based on task filter type:
-  - "Closed only": State = 'Closed'
-  - "Worked on only": State <> 'Closed'
-  - "Both": No state filter (include all states)
-- Filter by user assignment after retrieving results
-- Extract Completed Work field - this contains the logged hours
-- Handle cases where work items have no parent (Parent field is null/empty)
-- Extract State field to display in report if needed
+- Use **wit_my_work_items** MCP tool to retrieve all work items for the authenticated user
+- Use **core_get_identity_ids** MCP tool only if "Specific team member" was selected
+- All filtering logic is performed client-side after retrieving work items
+- For "Worked on only" filter, always use `System.ChangedDate` (override user's date field choice)
+- **Critical**: Date fields in Azure DevOps are in ISO 8601 format (e.g., "2025-01-17T14:30:00Z")
+  - Parse the date string carefully
+  - **MUST extract only the date portion (YYYY-MM-DD)** - take first 10 characters or split on 'T'
+  - **DO NOT use datetime comparison** - this would exclude work items based on time of day
+  - Compare date strings directly: `date >= START_DATE AND date <= END_DATE`
+  - Work items at ANY time on START_DATE or END_DATE must be included (00:00:00 to 23:59:59)
+- Handle missing/null fields gracefully:
+  - CompletedWork might be 0 or null → exclude
+  - ClosedDate might be null for non-closed items → exclude if using ClosedDate filter
+  - ChangedDate should always exist → but check just in case
+  - Parent might be null → handle in Phase 5 (orphaned items)
+- Extract State field for filtering and potential display in report
+- Work items can be of any type (Task, Bug, Issue, User Story, Feature, etc.) as long as they have logged hours
+- The filtering order matters:
+  1. First filter by CompletedWork > 0 (most selective)
+  2. Then filter by user assignment
+  3. Then filter by date range
+  4. Finally filter by state
+- Store the actual date value used for filtering (for date-based grouping in Phase 5)
 
 ### Phase 5: Organize Work Items Based on Grouping Mode
 
@@ -782,11 +822,12 @@ Replace placeholders:
 - Use AskUserQuestion for free-form input steps (Steps 1a and 2a should be simple text output)
 - Ask questions one at a time when they can be combined (use the 2-step approach described in Phase 2)
 - Include work items with Completed Work = 0 or null
-- Use a hardcoded WIQL query (must build dynamically based on user choices)
 - Use ClosedDate when user selected "worked on only" filter (must use ChangedDate)
 - Use placeholders or empty values in the report
 - Ignore the task filter type or date field selections from Phase 2
 - Second-guess or reinterpret the current date from `<env>` - trust it exactly as ISO 8601 format (YYYY-MM-DD where month is middle number)
+- Manually calculate day of week - ALWAYS use system commands (PowerShell on Windows, date on Mac/Linux)
+- Skip client-side filtering steps (all filtering must be done after retrieving work items)
 
 **DO:**
 - Use **Read tool** to check CLAUDE.md for Azure DevOps configuration
@@ -797,25 +838,35 @@ Replace placeholders:
 - Wait for user's response after each step before proceeding
 - Trust the current date from `<env>` exactly as provided in ISO 8601 format (YYYY-MM-DD)
 - Remember: In ISO format, month is the MIDDLE number (01=Jan, 02=Feb, 03=Mar, 04=Apr, 05=May, 06=Jun, 07=Jul, 08=Aug, 09=Sep, 10=Oct, 11=Nov, 12=Dec)
-- Calculate week dates based on the correct current date without reinterpreting the format
-- Build WIQL query dynamically based on task filter type and date field selections:
-  - Closed only: Use State = 'Closed' + user's date field choice
-  - Worked on only: Use State <> 'Closed' + ChangedDate (override date field choice)
-  - Both: No state filter + user's date field choice
-- Use correct Azure DevOps field names in WIQL queries:
-  - Closed Date field: `Microsoft.VSTS.Common.ClosedDate` (NOT `System.ClosedDate`)
-  - Changed Date field: `System.ChangedDate` (standard field, but verify if query fails)
+- **CRITICAL**: Use **Bash tool** with platform-specific system commands to determine day of week:
+  - Windows: `powershell -Command "(Get-Date 'YYYY-MM-DD').DayOfWeek.value__"` (returns 0-6)
+  - Mac/Linux: `date -d "YYYY-MM-DD" +%u` (returns 1-7)
+  - Follow the lookup tables in Phase 3 exactly for calculating days_to_subtract
+  - DO NOT manually calculate day of week
+- Use **wit_my_work_items** MCP tool to retrieve work items for the authenticated user
+- Use **core_get_identity_ids** MCP tool to resolve team member identities (only if "Specific team member" was selected)
+- Perform all filtering client-side after retrieving work items:
+  - Filter by CompletedWork > 0 first
+  - Filter by user assignment
+  - Filter by date range (using appropriate date field)
+  - Filter by state (based on task filter type)
+- Use correct Azure DevOps field names when filtering:
+  - Closed Date field: `Microsoft.VSTS.Common.ClosedDate`
+  - Changed Date field: `System.ChangedDate`
   - State field: `System.State`
-  - Note: Azure DevOps field names can vary by process template; if a field fails, check error message for correct field name
-- Use **wit_query** MCP tool to execute the dynamically built query
-- Calculate date ranges programmatically based on user selections
-- Filter work items by user assignment after query
+  - Completed Work field: `Microsoft.VSTS.Scheduling.CompletedWork`
+- For "Worked on only" filter, always use `System.ChangedDate` (override user's date field choice)
+- Parse ISO 8601 date strings carefully and **compare date portions only (YYYY-MM-DD)**
+  - Extract first 10 characters from datetime strings before comparison
+  - Do NOT use full datetime comparison with time components
+  - This ensures work items at any time during the day are included
 - Always filter by CompletedWork > 0
 - Organize work items based on grouping mode selection:
   - "By hierarchy": Build proper hierarchical tree structure and roll up hours from children to parents
   - "By date": Group by date with flat list (no hierarchy)
   - "By date with hierarchy": Group by date first, then build hierarchy within each date
 - Handle orphaned work items under "No Parent" (for hierarchy-based grouping modes)
+- Handle missing/null date fields gracefully (exclude work items with missing dates)
 - Display report with appropriate verbosity level and grouping mode format
 - Use proper formatting with emojis and tree structure (or flat list for "By date" mode)
 - Show helpful summary statistics in footer with filter-appropriate tip text
@@ -826,20 +877,27 @@ Replace placeholders:
 
 If the MCP tool returns an error:
 - Display the error message to the user
-- **If error contains "Cannot find field"**:
-  - The Azure DevOps process template may use different field names
-  - Common alternatives to try:
-    - For Closed Date: Try `Microsoft.VSTS.Common.ClosedDate` or `System.ClosedDate`
-    - For Changed Date: Try `System.ChangedDate` or `Microsoft.VSTS.Common.ChangedDate`
-  - Adjust the WIQL query with the correct field name and retry
-- Suggest other possible solutions:
-  - Verify Azure DevOps MCP server is configured and running
-  - Check that project name is correct
-  - Ensure user has permissions to query work items
-  - Verify Node.js 20+ is installed for MCP server
-  - Check that date range is valid
-  - Ensure WIQL query syntax is correct
-- Recommend running /ado-init if configuration seems incorrect
+- Suggest possible solutions:
+  - **For wit_my_work_items errors**:
+    - Verify Azure DevOps MCP server is configured and running
+    - Check that project name is correct
+    - Ensure user has permissions to query work items
+    - Verify Node.js 20+ is installed for MCP server
+    - Recommend running /ado-init if configuration seems incorrect
+  - **For core_get_identity_ids errors**:
+    - Verify the team member name is spelled correctly
+    - Check that the team member exists in the Azure DevOps organization
+    - Try using the exact display name as it appears in Azure DevOps
+    - Suggest using "Current user" option instead if team member cannot be resolved
+
+If client-side filtering finds no matching work items:
+- This is not an error, but an expected outcome
+- The report will display the "No work items found" message with helpful tips
+- Common reasons:
+  - No work items had logged hours during the time period
+  - The selected user had no work items assigned
+  - The date range or state filter was too restrictive
+  - Work items exist but lack CompletedWork values
 
 If no work items are found:
 - Display a friendly message (customize based on task filter type):

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.1] - 2025-10-24
+
+### Fixed
+
+#### AI-ADO Plugin (v1.2.1)
+
+- **Fixed `/ado-timesheet-report` command**
+  - Migrated from non-existent `wit_query` to `wit_my_work_items` MCP tool with client-side filtering
+  - Fixed date range filtering to use date-only comparison (prevents time-of-day issues)
+  - Fixed day-of-week calculation using platform-specific system commands (PowerShell on Windows, `date` on Mac/Linux)
+  - Prevents off-by-one errors in current week date range calculations
+
+### Changed
+
+- Condensed changelog entries across all versions for improved readability while maintaining essential information
+
 ## [1.4.0] - 2025-10-23
 
 ### Added
@@ -14,33 +30,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### AI-ADO Plugin (v1.2.0)
 
 - `/ado-timesheet-report` command for generating flexible weekly timesheet reports
-  - **Flexible task filtering** to support multiple team workflows:
-    - Closed only: Tasks completed during the period (best for teams that close tasks daily)
-    - Worked on only: Active tasks with hours logged (best for incremental hour logging)
-    - Both: Comprehensive view of all work regardless of task state
-  - **Multiple date field support**:
-    - Closed Date: Filter by when tasks were marked as closed
-    - Changed Date: Filter by when tasks were last updated (captures incremental work)
-    - Smart override: Automatically uses Changed Date when "worked on only" filter is selected
-  - **Three grouping modes** for organizing timesheet reports:
-    - By hierarchy: Traditional tree structure (Feature > User Story > Task) with rolled-up hours
-    - By date: Flat list grouped by day of the week for daily time tracking
-    - By date with hierarchy: Combined view showing hierarchy within each day of the week
-  - Queries Azure DevOps with dynamically built WIQL queries based on filter selections
-  - Filters by "Completed Work" hours on work items
-  - Supports flexible week definitions (Monday-Sunday or Sunday-Saturday)
-  - Multiple time period options: current week, last week, or specific week by end date
-  - Three verbosity levels for different reporting needs:
-    - Level 1: Work Item ID & Hours Only
-    - Level 2: Work Item ID, Title, and Hours
-    - Level 3: Work Item ID, Title, Description, and Hours
-  - User filtering: current authenticated user or specific team member
-  - Handles orphaned work items (no parent) under "No Parent" section
-  - Supports all work item types (Tasks, Bugs, Issues, etc.) with logged hours
-  - Displays comprehensive summary statistics (total hours, work item counts by type)
-  - Report header shows active filter and date field for transparency
-  - Formatted report with emojis and proper tree indentation for readability
-  - Accurate week calculation algorithm with explicit examples to prevent date errors
+  - Flexible task filtering (closed only, worked on only, or both)
+  - Multiple date field support (Closed Date or Changed Date)
+  - Three grouping modes (by hierarchy, by date, or by date with hierarchy)
+  - Three verbosity levels (ID & hours, with titles, or with descriptions)
+  - Flexible week definitions (Monday-Sunday or Sunday-Saturday)
+  - User filtering (current user or specific team member)
+  - Summary statistics and formatted reports with emoji icons
 
 ## [1.3.0] - 2025-10-21
 
@@ -48,92 +44,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### AI-ADO Plugin (v1.1.0)
 
-- **AI-Powered Work Item Generation** for all work item creation commands
-  - `/ado-create-feature`, `/ado-create-story`, and `/ado-create-task` now support AI-powered generation mode
-  - Users can choose between AI generation or manual input for each work item
-  - AI generates professional content based on user description:
-    - Features: Titles and comprehensive descriptions following naming conventions
-    - User Stories: Titles, persona statements (As a... I want to... so that...), background information, and acceptance criteria (Given/When/Then format)
-    - Tasks: Descriptive titles focused on work to be done
-  - Review and confirmation workflow for all AI-generated content
-  - Users can override any AI-generated field with custom text
-  - AI analyzes CLAUDE.md configuration for naming conventions and standards
-  - Context-aware generation retrieves parent work item details for better quality
+- **AI-Powered Work Item Generation** for `/ado-create-feature`, `/ado-create-story`, and `/ado-create-task` commands
+  - AI generates titles, descriptions, persona statements, and acceptance criteria
+  - Review and confirmation workflow with override options
+  - Analyzes CLAUDE.md for naming conventions and standards
+  - Context-aware generation using parent work item details
 
-- `/ado-log-story-work` command for rapid logging of completed work to User Stories
-  - Creates Task work items with completed hours already set
-  - AI-powered or manual task title and description generation
-  - Automatic git commit hash detection and lookup for enhanced context
-  - Sets both "Original Estimate" and "Completed Work" fields (leaves "Remaining Work" empty)
-  - Optional placeholder task hour subtraction feature
-  - Subtracts hours from placeholder task's "Original Estimate" and "Remaining Work" fields
-  - Designed for multiple daily work logging sessions
-  - Displays comprehensive success message with task and placeholder task details
+- `/ado-log-story-work` command for rapid work logging to User Stories
+  - Creates tasks with completed hours pre-populated
+  - AI-powered or manual task generation
+  - Automatic git commit hash detection
+  - Optional placeholder task hour subtraction
 
 #### AI-Security Plugin (v1.2.0)
 
-- **Hybrid Agent + Skill Architecture** for optimal context efficiency
-  - New `security-audit` skill (`skills/security-audit/SKILL.md`) with comprehensive security methodology
-  - Interactive security audits when code is already in conversation context
-  - Skill auto-loads when Claude detects security-related tasks
-  - Full security expertise without consuming context until needed
-  - Progressive disclosure design: metadata (~100 words) → full skill (~5k words) → only when relevant
+- **Hybrid Agent + Skill Architecture** with `security-audit` skill for optimal context efficiency
+  - Progressive disclosure design: metadata loads first, full skill loads only when needed
+  - Interactive security audits without consuming context until relevant
 
 #### AI-Performance Plugin (v1.1.0)
 
-- **Hybrid Agent + Skill Architecture** for optimal context efficiency
-  - New `performance-audit` skill (`skills/performance-audit/SKILL.md`) with comprehensive performance methodology
-  - Interactive performance analysis when code is already in conversation context
-  - Skill auto-loads when Claude detects performance-related tasks
-  - Full performance expertise without consuming context until needed
-  - Progressive disclosure design: metadata (~100 words) → full skill (~5k words) → only when relevant
+- **Hybrid Agent + Skill Architecture** with `performance-audit` skill for optimal context efficiency
+  - Progressive disclosure design: metadata loads first, full skill loads only when needed
+  - Interactive performance analysis without consuming context until relevant
 
 #### AI-Plugins Plugin (v1.2.0)
 
 - **Plugin Development Skills** for interactive plugin and skill creation
-  - New `plugins-scaffold` skill (`skills/plugins-scaffold/SKILL.md`) for creating Claude Code plugins
-  - New `skills-scaffold` skill (`skills/skills-scaffold/SKILL.md`) for creating Claude Code skills
-  - Interactive guidance when creating plugins, manifests, commands, agents, skills, or hooks
-  - Skills auto-load when Claude detects plugin development tasks
-  - Comprehensive coverage of plugin architecture, marketplace setup, and best practices
+  - New `plugins-scaffold` and `skills-scaffold` skills
+  - Auto-loads when creating plugins, manifests, commands, agents, skills, or hooks
 
 #### AI-ADO Plugin (v1.1.0)
 
 - **Azure DevOps Work Items Skill** for MCP-powered work item management
-  - New `ado-work-items` skill (`skills/ado-work-items/SKILL.md`) for creating and managing ADO work items
-  - Enforces proper work item hierarchy (Features → User Stories → Tasks)
-  - HTML formatting guidance for descriptions and acceptance criteria
-  - Naming convention support (decimal notation or descriptive names)
-  - Story points and hour estimation best practices
+  - New `ado-work-items` skill enforcing proper hierarchy and naming conventions
+  - HTML formatting guidance and best practices
   - Auto-loads when using Azure DevOps MCP server tools
 
 ### Changed
 
 #### AI-Security Plugin (v1.2.0)
 
-- **Converted `security-auditor` agent to lightweight wrapper** (reduced from ~2000 words to ~100 words)
-  - Agent now loads the `security-audit` skill in fresh context
-  - Eliminates context overhead in every conversation when agent isn't used
-  - Enables flexible usage: skill for interactive work, agent for fresh context
-  - Provides full 200K token budget when launching agent for large codebases
+- Converted `security-auditor` agent to lightweight wrapper that loads `security-audit` skill in fresh context
 
 #### AI-Performance Plugin (v1.1.0)
 
-- **Converted `performance-optimizer` agent to lightweight wrapper** (reduced from ~1500 words to ~100 words)
-  - Agent now loads the `performance-audit` skill in fresh context
-  - Eliminates context overhead in every conversation when agent isn't used
-  - Enables flexible usage: skill for interactive work, agent for fresh context
-  - Provides full 200K token budget when launching agent for large codebases
+- Converted `performance-optimizer` agent to lightweight wrapper that loads `performance-audit` skill in fresh context
 
 ### Fixed
 
 #### AI-ADO Plugin (v1.1.0)
 
-- **Corrected Acceptance Criteria field handling in `/ado-create-story` command**
-  - Fixed issue where acceptance criteria was incorrectly included in Description field
-  - Now properly sets acceptance criteria in the dedicated `Microsoft.VSTS.Common.AcceptanceCriteria` field
-  - Description field now correctly contains only persona statement and background information
-  - Both Story Points and Acceptance Criteria are set in a single `wit_update_work_item` operation
+- Fixed `/ado-create-story` to properly set acceptance criteria in dedicated field instead of Description field
 
 ## [1.2.0] - 2025-10-20
 
@@ -141,55 +103,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### AI-Git Plugin (v1.1.0)
 
-- `/git-init` command for automated .gitignore generation and management
+- `/git-init` command for automated .gitignore generation
   - Intelligent technology detection (Node.js, Python, .NET, Go, Rust, PHP, Ruby, Java, Docker, React/Next.js, Vue, Terraform)
-  - Comprehensive ignore pattern generation (80+ patterns based on tech stack)
-  - Smart merge strategies for existing `.gitignore` files (Smart Merge, Append, Replace)
-  - Preview and confirmation workflow before making changes
-  - Base patterns for environment files, OS files, IDE files, and version control
-  - Technology-specific patterns for dependencies, build outputs, testing, and caching
-  - Lock file handling with user preference options
-  - Pattern deduplication and custom pattern preservation
-  - Organized sections with helpful comments
+  - Comprehensive pattern generation (80+ patterns based on tech stack)
+  - Smart merge strategies with preview and confirmation workflow
 
 #### AI-ADO Plugin (v1.0.0)
 
 - `/ado-init` command for Azure DevOps configuration and MCP server setup
-  - Interactive configuration collection for organization, project, team, area path, and iteration path
-  - Automatic CLAUDE.md configuration with Azure DevOps guidelines
-  - Work item hierarchy standards (Features → User Stories → Tasks)
-  - Naming convention support (decimal notation or descriptive names)
-  - Optional `.mcp.json` creation for Microsoft Azure DevOps MCP server integration
-  - Cross-platform support (Windows and Linux/Mac) with appropriate command configurations
-  - Authentication setup guidance with direct links to Azure DevOps MCP repository
-  - Personal Access Token (PAT) setup instructions for MCP server authentication
-  - Security-conscious: Shows manual configuration snippet if `.mcp.json` already exists
-  - Append-only strategy to prevent duplicate Azure DevOps sections
+  - Interactive configuration for organization, project, team, area path, and iteration path
+  - Automatic CLAUDE.md configuration with work item hierarchy standards
+  - Optional `.mcp.json` creation for MCP server integration
+  - Cross-platform support with PAT authentication guidance
 
 - `/ado-create-feature` command for creating Feature work items
-  - Validates Azure DevOps configuration from CLAUDE.md before proceeding
-  - Interactive prompts for feature title and high-level description
-  - Automatic HTML formatting for description field with proper tags
-  - Applies organization defaults (Area Path, Iteration Path, State)
-  - Returns Feature ID with Azure DevOps web link for easy navigation
-  - Next steps guidance for creating child User Stories
+  - Interactive prompts for title and description with HTML formatting
+  - Returns Feature ID with Azure DevOps web link
 
 - `/ado-create-story` command for creating User Story work items
-  - Creates User Stories as children of existing Features
-  - Interactive prompts for parent Feature ID, title, persona statement, background, acceptance criteria, and story points
-  - Structured description format with persona statement, background section, and acceptance criteria
-  - Story Points estimation using Fibonacci sequence values
-  - HTML formatting for improved readability in Azure DevOps
-  - Given-When-Then format for acceptance criteria
-  - Returns User Story ID with next steps for creating child Tasks
+  - Interactive prompts for parent Feature, title, persona statement, acceptance criteria, and story points
+  - HTML formatted with Given-When-Then acceptance criteria
 
 - `/ado-create-task` command for creating Task work items
-  - Creates Tasks as children of existing User Stories
-  - Interactive prompts for parent User Story ID, task title, and hour estimate
-  - Lightweight task descriptions that reference parent User Story
+  - Interactive prompts for parent User Story, title, and hour estimate
   - Hour tracking with Original Estimate and Remaining Work fields
-  - Retrieves parent story details for contextual task description
-  - Returns Task ID with assignment and progress tracking guidance
 
 ### Changed
 
@@ -208,21 +145,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### AI-Security Plugin (v1.1.0)
 
 - `/security-init` command for automated security settings initialization
-  - Intelligent technology detection (Node.js, Python, .NET, Go, Rust, PHP, Ruby, Java, Docker)
-  - Comprehensive file denial pattern generation (40-60+ patterns based on tech stack)
-  - Smart merge strategies for existing `.claude/settings.json` configurations
-  - Preview and confirmation workflow before making changes
-  - Base security patterns for environment files, credentials, SSH keys, certificates, cloud configs, and database files
-  - Technology-specific patterns for build artifacts, cache directories, and dependency folders
+  - Intelligent technology detection with comprehensive file denial patterns (40-60+ based on tech stack)
+  - Smart merge strategies with preview and confirmation workflow
 
 ### Changed
 
 #### AI-Security Plugin (v1.1.0)
 
-- Enhanced `/security-audit` command with pre-audit configuration check
-  - Automatically detects if `.claude/settings.json` has proper file denial rules
-  - Warns users with fewer than 4 deny rules configured
-  - Recommends running `/security-init` before performing comprehensive security audits
+- Enhanced `/security-audit` with pre-audit configuration check recommending `/security-init` for users with fewer than 4 deny rules
 
 ## [1.0.1] - 2025-10-17
 
@@ -230,14 +160,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### AI-Plugins Plugin (v1.0.0)
 
-- Initial release of AI-Plugins plugin for managing Claude Code plugins
-- `/scaffold-plugin` command for interactive plugin scaffolding (later renamed to `/plugins-scaffold`)
-  - Interactive plugin creation with AI assistance
-  - Automatic directory structure generation
-  - Metadata file generation (plugin.json)
-  - Command template creation
-  - Optional README and LICENSE generation
-  - Automatic marketplace registration
+- Initial release with `/scaffold-plugin` command for interactive plugin scaffolding (later renamed to `/plugins-scaffold`)
+  - AI-assisted plugin creation with automatic directory structure, metadata, and marketplace registration
 
 ## [1.0.0] - 2025-10-17
 
@@ -245,53 +169,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Marketplace
 
-- Initial release of Claude Code Plugins marketplace
-- Marketplace metadata system with `.claude-plugin/marketplace.json`
-- Flat plugin directory structure for easy management
+- Initial release of Claude Code Plugins marketplace with `.claude-plugin/marketplace.json` metadata system
 - Support for slash commands, agents, and skills
 
 #### AI-Git Plugin (v1.0.0)
 
-- `/commit-push` command for automated git commit and push workflow (later renamed to `/git-commit-push`)
-- Intelligent commit message generation following repository conventions
-- Git status analysis and file staging
-- Automatic detection of conventional commit patterns
-- Push to remote with branch tracking
-- Clean commit messages without AI attribution
+- `/commit-push` command for automated git commit and push (later renamed to `/git-commit-push`)
+  - Intelligent commit message generation following repository conventions
+  - Clean commit messages without AI attribution
 
 #### AI-Security Plugin (v1.0.0)
 
-- `/security-audit` command for comprehensive security analysis
-- `security-auditor` agent with deep security expertise
-- OWASP Top 10 2021 compliance checking
-- Vulnerability detection for SQL injection, XSS, authentication issues, and more
-- Timestamped security audit reports in `/docs/security/` directory
-- Architecture security assessment capabilities
-- Code remediation examples with before/after comparisons
-- Risk scoring and prioritized remediation guidance
-- Reproducible audit documentation for compliance requirements
+- `/security-audit` command with `security-auditor` agent
+  - OWASP Top 10 2021 compliance checking and vulnerability detection
+  - Timestamped audit reports with risk scoring and remediation guidance
 
 #### AI-Performance Plugin (v1.0.0)
 
-- `/performance-audit` command for comprehensive performance analysis
-- `performance-optimizer` agent with deep performance optimization expertise
-- Performance anti-pattern detection (N+1 queries, synchronous operations, memory issues)
-- Database optimization recommendations with missing index detection
-- Timestamped performance audit reports in `/docs/performance/` directory
-- Architecture performance assessment (data access, application layer, infrastructure)
-- Code optimization examples with before/after comparisons
-- Impact scoring and prioritized optimization roadmap
-- Expected performance improvement estimates
+- `/performance-audit` command with `performance-optimizer` agent
+  - Performance anti-pattern detection and database optimization recommendations
+  - Timestamped audit reports with impact scoring and optimization roadmap
 
 ### Documentation
 
-- README.md for marketplace overview and installation instructions
-- CLAUDE.md for repository development guidelines
-- Individual plugin README files with comprehensive documentation
-- Plugin installation and usage instructions
-- License information (MIT)
+- README.md, CLAUDE.md, individual plugin READMEs, and MIT license
 
-[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.1.0...v1.2.0
