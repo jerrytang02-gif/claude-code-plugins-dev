@@ -30,6 +30,10 @@ Interactively create a new Task work item as a child of an existing User Story, 
 
 Rapidly log completed work to a User Story by creating a Task work item with completed hours already set. Designed for quick logging multiple times per day. Supports AI-powered generation with automatic git commit hash detection and optional placeholder task hour subtraction.
 
+### `/ado-timesheet-report`
+
+Generate a summarized report of hours logged from work items during a specified week, with flexible filtering for closed, worked on, or both types of tasks. Creates a hierarchical tree structure (Feature > User Story > Task) showing rolled-up hours for weekly timesheet purposes.
+
 **What it does:**
 
 - Collects your Azure DevOps organization, project, and team settings
@@ -286,6 +290,142 @@ When logging completed work, you can optionally subtract hours from a placeholde
 - Azure DevOps MCP server must be configured and running
 - Git repository accessible (optional, for commit hash lookup)
 
+### `/ado-timesheet-report` Command Details
+
+**What it does:**
+
+- Validates Azure DevOps configuration exists in CLAUDE.md
+- Prompts for week definition (Monday-Sunday or Sunday-Saturday)
+- Asks for time period (current week, last week, or specific week)
+- **Offers flexible task filtering**:
+  - Only closed tasks (best for completed work)
+  - Only worked on tasks (best for in-progress work)
+  - Both closed and worked on tasks (comprehensive view)
+- **Supports multiple date fields**:
+  - Closed Date (when task was marked as closed)
+  - Changed Date (when task was last updated)
+- Offers verbosity options (ID & Hours, ID/Title/Hours, or ID/Title/Description/Hours)
+- Prompts for user selection (current user or specific team member)
+- Queries Azure DevOps for work items matching the specified criteria
+- Filters by "Completed Work" hours logged on work items
+- Builds hierarchical tree structure (Feature > User Story > Task)
+- Displays rolled-up hours at each parent level
+- Handles orphaned work items under "No Parent" section
+
+**Usage:**
+
+```
+/ado-timesheet-report
+
+# Step 1: Configure report (4 questions asked together)
+#   - Week definition: Monday-Sunday or Sunday-Saturday
+#   - Time period: Current week, Last week, or Specific week
+#   - Task filter type: Closed only, Worked on only, or Both
+#   - Date field: Closed Date or Changed Date
+# Step 1a: If you chose "Specific week", provide end date (YYYY-MM-DD)
+
+# Step 2: Display options (3 questions asked together)
+#   - Verbosity level: Level 1, 2, or 3
+#   - Grouping mode: By hierarchy, By date, or By date with hierarchy
+#   - User: Current user or Specific team member
+# Step 2a: If you chose "Specific team member", provide their name
+
+# ✨ Queries Azure DevOps with dynamic filters based on your selections
+# ✨ Filters by user assignment and "Completed Work" hours
+# ✨ Builds hierarchical tree structure with rolled-up totals
+# ✨ Displays comprehensive report with summary statistics
+# ✅ Done!
+```
+
+**Report Features:**
+
+- **Flexible Task Filtering**: Choose between closed only, worked on only, or both types of tasks
+- **Multiple Date Fields**: Use Closed Date for final work or Changed Date for recent updates
+- **Three Grouping Modes**: Organize your report in the way that works best for you
+  - **By hierarchy**: Traditional tree structure (Feature > User Story > Task) with rolled-up hours
+  - **By date**: Flat list grouped by day of the week for daily time tracking
+  - **By date with hierarchy**: Combine both - see the hierarchy within each day of the week
+- **Multiple Verbosity Levels**: Choose the level of detail you need for your timesheet
+- **Flexible Date Ranges**: Current week, last week, or any specific week
+- **User Filtering**: Report on yourself or any team member
+- **Orphaned Items**: Handles work items without parents gracefully
+- **All Work Item Types**: Includes Tasks, Bugs, Issues, and any other types with logged hours
+- **Supports Multiple Workflows**: Works whether your team closes tasks daily or logs hours incrementally
+
+**Example Report (Verbosity Level 2, By Hierarchy):**
+
+```
+📊 Timesheet Report
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 Period: Jan 13, 2025 to Jan 19, 2025 (Monday-Sunday)
+👤 User: John Smith
+🔍 Filter: Both closed and worked on
+📅 Date Field: Changed Date
+⏱️  Total Hours: 38.5
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 Feature 101: User Authentication System (Total: 24.0h)
+  📋 Story 102: Implement user login functionality (Total: 16.0h)
+    ✓ Task 103: Implement JWT token validation - 8.0h
+    ✓ Task 104: Add login API endpoint - 8.0h
+  📋 Story 105: Password reset functionality (Total: 8.0h)
+    ✓ Task 106: Email template for password reset - 4.0h
+    ✓ Task 107: Reset token generation logic - 4.0h
+
+📦 Feature 108: Dashboard Analytics (Total: 14.5h)
+  📋 Story 109: User activity metrics (Total: 14.5h)
+    ✓ Task 110: Database queries for metrics - 6.5h
+    ✓ Task 111: Chart visualization components - 8.0h
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⏱️  Total Hours: 38.5
+📊 Work Items: 9 (2 Features, 3 Stories, 4 Tasks)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Example Report (Verbosity Level 2, By Date):**
+
+```
+📊 Timesheet Report
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 Period: Jan 13, 2025 to Jan 19, 2025 (Monday-Sunday)
+👤 User: John Smith
+🔍 Filter: Both closed and worked on
+📅 Date Field: Changed Date
+⏱️  Total Hours: 38.5
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📅 Monday, Jan 13, 2025 (Total: 8.0h)
+  • 103: Implement JWT token validation - 8.0h
+
+📅 Tuesday, Jan 14, 2025 (Total: 12.0h)
+  • 104: Add login API endpoint - 8.0h
+  • 106: Email template for password reset - 4.0h
+
+📅 Wednesday, Jan 15, 2025 (Total: 10.5h)
+  • 107: Reset token generation logic - 4.0h
+  • 110: Database queries for metrics - 6.5h
+
+📅 Thursday, Jan 16, 2025 (Total: 8.0h)
+  • 111: Chart visualization components - 8.0h
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⏱️  Total Hours: 38.5
+📊 Work Items: 9 (2 Features, 3 Stories, 4 Tasks)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Requirements:**
+- Must run `/ado-init` first to configure Azure DevOps settings
+- Azure DevOps MCP server must be configured and running
+- Work items must have "Completed Work" hours logged (state depends on filter choice)
+
+**Use Cases:**
+
+- **Daily Close & Log**: If your team creates and closes tasks daily, use "Closed only" filter with "Closed Date"
+- **Incremental Logging**: If your team logs hours throughout the week on active tasks, use "Worked on only" or "Both" filter with "Changed Date"
+- **Weekly Review**: For comprehensive timesheets, use "Both" filter to capture all work regardless of task state
+
 ---
 
 ## 🚀 Quick Start
@@ -363,13 +503,14 @@ All work item creation commands (`/ado-create-feature`, `/ado-create-story`, `/a
 
 ### Core Commands
 
-The plugin provides five slash commands for complete Azure DevOps work item lifecycle management:
+The plugin provides six slash commands for complete Azure DevOps work item lifecycle management:
 
 1. **`/ado-init`**: Initialize Azure DevOps configuration with organization settings
 2. **`/ado-create-feature`**: Create Feature work items with AI or manual input
 3. **`/ado-create-story`**: Create User Story work items with AI-generated structured content
 4. **`/ado-create-task`**: Create Task work items with AI-generated titles
 5. **`/ado-log-story-work`**: Rapidly log completed work with git commit detection and placeholder hour tracking
+6. **`/ado-timesheet-report`**: Generate weekly timesheet reports with hierarchical hour rollups
 
 ### `/ado-init` Command
 
@@ -597,9 +738,9 @@ Future commands and features planned for this plugin:
 ## 📦 Plugin Details
 
 - **Name:** AI-ADO Plugin
-- **Version:** 1.1.0
+- **Version:** 1.2.0
 - **Type:** AI Instruction Plugin (Slash Commands)
-- **Commands:** `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`, `/ado-log-story-work`
+- **Commands:** `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`, `/ado-log-story-work`, `/ado-timesheet-report`
 - **MCP Integration:** Microsoft Azure DevOps MCP Server (optional, OS-aware configuration)
 - **Requirements:** Node.js 20+
 - **License:** MIT

@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2025-10-23
+
+### Added
+
+#### AI-ADO Plugin (v1.2.0)
+
+- `/ado-timesheet-report` command for generating flexible weekly timesheet reports
+  - **Flexible task filtering** to support multiple team workflows:
+    - Closed only: Tasks completed during the period (best for teams that close tasks daily)
+    - Worked on only: Active tasks with hours logged (best for incremental hour logging)
+    - Both: Comprehensive view of all work regardless of task state
+  - **Multiple date field support**:
+    - Closed Date: Filter by when tasks were marked as closed
+    - Changed Date: Filter by when tasks were last updated (captures incremental work)
+    - Smart override: Automatically uses Changed Date when "worked on only" filter is selected
+  - **Three grouping modes** for organizing timesheet reports:
+    - By hierarchy: Traditional tree structure (Feature > User Story > Task) with rolled-up hours
+    - By date: Flat list grouped by day of the week for daily time tracking
+    - By date with hierarchy: Combined view showing hierarchy within each day of the week
+  - Queries Azure DevOps with dynamically built WIQL queries based on filter selections
+  - Filters by "Completed Work" hours on work items
+  - Supports flexible week definitions (Monday-Sunday or Sunday-Saturday)
+  - Multiple time period options: current week, last week, or specific week by end date
+  - Three verbosity levels for different reporting needs:
+    - Level 1: Work Item ID & Hours Only
+    - Level 2: Work Item ID, Title, and Hours
+    - Level 3: Work Item ID, Title, Description, and Hours
+  - User filtering: current authenticated user or specific team member
+  - Handles orphaned work items (no parent) under "No Parent" section
+  - Supports all work item types (Tasks, Bugs, Issues, etc.) with logged hours
+  - Displays comprehensive summary statistics (total hours, work item counts by type)
+  - Report header shows active filter and date field for transparency
+  - Formatted report with emojis and proper tree indentation for readability
+  - Accurate week calculation algorithm with explicit examples to prevent date errors
+
 ## [1.3.0] - 2025-10-21
 
 ### Added
@@ -256,7 +291,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin installation and usage instructions
 - License information (MIT)
 
-[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/charlesjones-dev/claude-code-plugins-dev/compare/v1.0.1...v1.1.0
