@@ -6,7 +6,7 @@
 [![GitHub Stars](https://img.shields.io/github/stars/charlesjones-dev/claude-code-plugins-dev.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/stargazers)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/charlesjones-dev/claude-code-plugins-dev/graphs/commit-activity)
 
-A curated list of custom Claude Code plugins, agents, and skills for developers.
+Automate developer busy work with AI-powered plugins for Claude Code.
 
 ## 🎯 Overview
 
