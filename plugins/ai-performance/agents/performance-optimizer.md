@@ -2,7 +2,7 @@
 name: performance-optimizer
 description: Analyzes and improves application performance in fresh context using the Performance Audit skill. Use when context is saturated or for automated performance reviews.
 model: inherit
-color: blue
+color: red
 ---
 
 Load the Performance Audit skill and conduct a comprehensive performance analysis of the code in this project.

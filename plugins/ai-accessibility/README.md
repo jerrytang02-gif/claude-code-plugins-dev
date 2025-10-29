@@ -288,11 +288,12 @@ Elite accessibility expertise skill that provides comprehensive WCAG knowledge, 
 ### Sample Finding
 
 ```markdown
-#### A-001: Missing Alternative Text for Images
+#### CR-001: Missing Alternative Text for Images
 
 **Location**: `src/components/Hero.tsx:45-48`
-**WCAG Criterion**: 1.1.1 Non-text Content (Level A)
 **Severity**: Critical
+**WCAG Criteria**: 1.1.1 Non-text Content (Level A)
+**Impact Score**: 9.5 (Critical)
 **Pattern Detected**: Images without alt attributes
 
 **Code Context**:
@@ -301,6 +302,7 @@ Elite accessibility expertise skill that provides comprehensive WCAG knowledge, 
 ```
 
 **Impact**: Screen reader users cannot access image content. Fails WCAG 1.1.1.
+**Affected Users**: Blind users, users with images disabled, search engines
 
 **Remediation**:
 ```tsx

@@ -2,7 +2,7 @@
 name: accessibility-auditor
 description: Conducts comprehensive accessibility audits in fresh context using the Accessibility Audit skill. Use when context is saturated or for automated accessibility reviews.
 model: inherit
-color: purple
+color: red
 ---
 
 Load the Accessibility Audit skill and conduct a comprehensive accessibility audit of the code in this project.
