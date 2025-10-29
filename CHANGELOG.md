@@ -58,6 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added "What This Plugin Is (and Isn't)" section to set proper expectations
   - Added 4-phase performance workflow diagram showing plugin's role in comprehensive performance strategy
   - Clarifies plugin is for code-level analysis, complements (not replaces) APM platforms, load testing, and production monitoring
+  - Renamed performance-optimizer agent to performance-auditor
 
 ### Fixed
 
@@ -66,12 +67,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Fixed `/security-audit` command to properly use Task tool with subagent**
   - Updated to use `Task tool with subagent_type "ai-security:security-auditor"` instead of generic reference
   - Ensures security-auditor agent is correctly invoked during audit execution
+- **Added comprehensive report template to security-auditing SKILL.md**
+  - Added full template with all sections (Executive Summary, Security Findings, OWASP Compliance Analysis, etc.)
+  - Ensures audit reports follow proper format matching accessibility-audit standard
+- **Removed redundant template from security-audit command file**
+  - Eliminated template duplication by keeping single source of truth in SKILL.md
+  - Reduced command file from 402 to 80 lines for better maintainability
 
 #### AI-Performance Plugin (v1.1.1)
 
 - **Fixed `/performance-audit` command to properly use Task tool with subagent**
-  - Updated to use `Task tool with subagent_type "ai-performance:performance-optimizer"` instead of generic reference
-  - Ensures performance-optimizer agent is correctly invoked during audit execution
+  - Updated to use `Task tool with subagent_type "ai-performance:performance-auditor"` instead of generic reference
+  - Ensures performance-auditor agent is correctly invoked during audit execution
+- **Added comprehensive report template to performance-audit SKILL.md**
+  - Added full template with all sections (Executive Summary, Performance Findings, Optimization Priorities, etc.)
+  - Ensures audit reports follow proper format matching accessibility-audit standard
+- **Removed redundant template from performance-audit command file**
+  - Eliminated template duplication by keeping single source of truth in SKILL.md
+  - Reduced command file from 471 to 36 lines for better maintainability
 
 ## [1.4.1] - 2025-10-24
 

@@ -5,7 +5,7 @@ model: inherit
 color: red
 ---
 
-Load the Security Audit skill and conduct a comprehensive security audit of the code in this project.
+Load the security-auditing skill and follow it's methodology and provide a structured report using the security-auditing skill's defined template.
 
 Focus on identifying vulnerabilities in:
 - Authentication and authorization mechanisms
@@ -14,5 +14,3 @@ Focus on identifying vulnerabilities in:
 - API security and rate limiting
 - Business logic flaws
 - Injection attack vectors
-
-Follow the Security Audit skill's methodology and provide a structured report with severity-based findings.

@@ -5,7 +5,7 @@ model: inherit
 color: red
 ---
 
-Load the Accessibility Audit skill and conduct a comprehensive accessibility audit of the code in this project.
+Load the accessibility-auditing skill and follow it's methodology and provide a structured report using the accessibility-auditing skill's defined template.
 
 Focus on identifying accessibility issues in:
 - Semantic HTML structure and heading hierarchy
@@ -17,5 +17,3 @@ Focus on identifying accessibility issues in:
 - Alternative text for images, icons, and multimedia
 - Screen reader compatibility and accessible names
 - Touch target sizes and mobile accessibility
-
-Follow the Accessibility Audit skill's methodology and provide a structured report with severity-based findings and a WCAG compliance matrix.

@@ -1,5 +1,5 @@
 ---
-name: Accessibility Audit
+name: accessibility-auditing
 description: Guide for conducting comprehensive accessibility audits of code to identify WCAG compliance issues and barriers to inclusive design. This skill should be used when reviewing accessibility, ARIA implementation, keyboard navigation, or screen reader compatibility.
 ---
 
@@ -297,7 +297,22 @@ Create comprehensive report with:
 
 ### Report Template
 
-Use the following comprehensive template for all accessibility audit reports:
+**🚨 CRITICAL INSTRUCTION - READ CAREFULLY 🚨**
+
+You MUST use this exact template structure for ALL accessibility audit reports. This is MANDATORY and NON-NEGOTIABLE.
+
+**REQUIREMENTS:**
+1. ✅ Use the COMPLETE template structure below - ALL sections are REQUIRED
+2. ✅ Follow the EXACT heading hierarchy (##, ###, ####)
+3. ✅ Include ALL section headings as written in the template
+4. ✅ Use the finding numbering format: A-001, A-002, etc.
+5. ✅ Include the tables, code examples, and checklists as shown
+6. ❌ DO NOT create your own format or structure
+7. ❌ DO NOT skip or combine sections
+8. ❌ DO NOT create abbreviated or simplified versions
+9. ❌ DO NOT number issues as "1, 2, 3" - use A-001, A-002, A-003 format
+
+**If you do not follow this template exactly, the report will be rejected.**
 
 <template>
 ## Executive Summary
@@ -1004,7 +1019,7 @@ function Modal({ isOpen, onClose, title, children }) {
 
 ## Accessibility Remediation Roadmap
 
-### Phase 1: Critical Accessibility Barriers (Week 1)
+### Phase 1: Critical Accessibility Barriers
 
 - [ ] Add alt text to all content images (12 images - A-001)
 - [ ] Associate labels with all form inputs (3 forms - A-002)
@@ -1014,7 +1029,7 @@ function Modal({ isOpen, onClose, title, children }) {
 
 **Expected Impact**: Address 45% of accessibility barriers, achieve baseline WCAG Level A compliance
 
-### Phase 2: High Priority Improvements (Week 2-4)
+### Phase 2: High Priority Improvements
 
 - [ ] Improve color contrast ratios across site (8 elements - A-003)
 - [ ] Implement skip navigation link for main content
@@ -1025,7 +1040,7 @@ function Modal({ isOpen, onClose, title, children }) {
 
 **Expected Impact**: Achieve 80% WCAG Level AA compliance, improve usability for screen reader users
 
-### Phase 3: Medium Priority Enhancements (Month 2)
+### Phase 3: Medium Priority Enhancements
 
 - [ ] Add autocomplete attributes to form fields
 - [ ] Improve link text descriptiveness
@@ -1036,7 +1051,7 @@ function Modal({ isOpen, onClose, title, children }) {
 
 **Expected Impact**: Achieve 95% WCAG Level AA compliance, enhance mobile accessibility
 
-### Phase 4: Accessibility Excellence (Month 3)
+### Phase 4: Accessibility Excellence
 
 - [ ] Implement AAA color contrast where feasible
 - [ ] Add extended descriptions for complex images
@@ -1046,34 +1061,6 @@ function Modal({ isOpen, onClose, title, children }) {
 - [ ] Document accessibility patterns and guidelines
 
 **Expected Impact**: Approach WCAG Level AAA compliance, establish sustainable accessibility practices
-
----
-
-## Estimated Remediation Effort
-
-### Development Time by Priority
-
-| Priority Level | Issue Count | Estimated Hours | Complexity |
-|----------------|-------------|-----------------|------------|
-| Critical Fixes | X issues | 40-60 hours | High - requires testing with screen readers |
-| High Priority | X issues | 30-40 hours | Medium - design and code changes needed |
-| Medium Priority | X issues | 20-30 hours | Medium - mostly code enhancements |
-| Low Priority | X issues | 10-15 hours | Low - straightforward fixes |
-| **Total** | **X issues** | **100-145 hours** | - |
-
-### Resource Requirements
-
-- **Frontend Developers**: 2-3 developers for code changes
-- **Designers**: 1 designer for color palette and focus indicator design
-- **QA/Accessibility Testers**: 1 specialist for verification with assistive technologies
-- **Project Timeline**: 8-12 weeks for complete remediation
-
-### Testing Requirements
-
-- **Automated Testing**: axe-core, WAVE, Lighthouse accessibility audits
-- **Manual Testing**: Keyboard navigation, screen reader testing (NVDA, JAWS, VoiceOver)
-- **User Testing**: Testing with actual users with disabilities (recommended)
-- **Browser Testing**: Cross-browser testing with assistive technologies
 
 ---
 

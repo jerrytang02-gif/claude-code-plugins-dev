@@ -114,9 +114,15 @@ Perform comprehensive performance analysis on your codebase and generate a detai
 
 ## 🤖 Available Agents
 
-### `performance-optimizer`
+### `performance-auditor`
 
 Specialized agent that performs deep performance analysis and generates comprehensive optimization reports. Automatically invoked by `/performance-audit` command.
+
+---
+
+## 📚 Available Skills
+
+### `performance-auditing`
 
 ---
 
@@ -199,47 +205,9 @@ Reports include before/after code examples showing:
 
 ---
 
-## 📊 Example Audit Results
-
-### Executive Summary
-
-```
-Performance Assessment Summary:
-┌──────────┬───────┬────────────┐
-│ Critical │ High  │ Medium     │
-├──────────┼───────┼────────────┤
-│ 2        │ 4     │ 5          │
-└──────────┴───────┴────────────┘
-
-Architecture Assessment: 6/10 best practices
-Overall Performance Score: 68/100
-```
-
-### Critical Finding Example
-
-```
-P-001: N+1 Query Problem
-Location: src/Services/VendorService.cs:78
-Performance Impact: 9.8 (Critical)
-
-Inefficient Code:
-foreach (var vendor in vendors)
-{
-    vendor.Products = context.Products.Where(p => p.VendorId == vendor.Id).ToList();
-}
-
-Optimized Fix:
-var vendors = context.Vendors.Include(v => v.Products).ToList();
-
-Performance Gain: 2000ms → 50ms (40x faster)
-Fix Priority: Immediate (within 24 hours)
-```
-
----
-
 ## ⚙️ How It Works
 
-The `/performance-audit` command uses Claude Code's specialized **performance-optimizer agent** to perform comprehensive performance analysis:
+The `/performance-audit` command uses Claude Code's specialized **performance-auditor agent** to perform comprehensive performance analysis:
 
 1. **Code Analysis**
    - Scans source files for performance anti-patterns
@@ -359,7 +327,7 @@ This timestamp-based naming ensures multiple audits on the same day don't overwr
 - **Type:** Comprehensive Performance Optimization Toolkit
 - **Features:**
   - Commands: `/performance-audit`
-  - Agents: `performance-optimizer`
+  - Agents: `performance-auditor`
 - **License:** MIT
 - **Author:** Charles Jones
 

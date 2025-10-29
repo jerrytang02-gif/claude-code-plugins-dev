@@ -161,6 +161,12 @@ Specialized agent that performs deep security analysis and generates comprehensi
 
 ---
 
+## 📚 Available Skills
+
+### `security-auditing`
+
+---
+
 ## 🚀 Quick Start
 
 ### Installation
@@ -301,40 +307,6 @@ Reports include before/after code examples showing:
 - Secure replacement code
 - Explanation of the fix
 - Best practices applied
-
----
-
-## 📊 Example Audit Results
-
-### Executive Summary
-
-```
-Risk Assessment Summary:
-┌──────────┬───────┬────────────┐
-│ Critical │ High  │ Medium     │
-├──────────┼───────┼────────────┤
-│ 2        │ 3     │ 4          │
-└──────────┴───────┴────────────┘
-
-OWASP Compliance: 40% (4/10 categories)
-Overall Security Score: 62/100
-```
-
-### Critical Finding Example
-
-```
-C-001: SQL Injection Vulnerability
-Location: src/Services/UserService.cs:45
-Risk Score: 9.8 (Critical)
-
-Vulnerable Code:
-var query = $"SELECT * FROM Users WHERE id = {userId}";
-
-Secure Fix:
-var user = context.Users.FirstOrDefault(u => u.Id == userId);
-
-Fix Priority: Immediate (within 24 hours)
-```
 
 ---
 

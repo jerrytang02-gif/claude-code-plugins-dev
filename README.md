@@ -16,12 +16,12 @@ This Claude Code plugin marketplace provides plugins that extend Claude Code's c
 
 | Plugin | Description | Commands | Agents | Skills |
 |--------|-------------|----------|--------|--------|
-| [ai-accessibility](plugins/ai-accessibility/) | AI-powered accessibility auditing with WCAG compliance | `/accessibility-audit` | `accessibility-auditor` | `accessibility-audit` |
+| [ai-accessibility](plugins/ai-accessibility/) | AI-powered accessibility auditing with WCAG compliance | `/accessibility-audit` | `accessibility-auditor` | `accessibility-auditing` |
 | [ai-ado](plugins/ai-ado/) | AI-powered Azure DevOps integration with MCP support | `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`, `/ado-log-story-work`, `/ado-timesheet-report` | - | `ado-work-items` |
 | [ai-git](plugins/ai-git/) | AI-powered git automation and workflow streamlining | `/git-init`, `/git-commit-push` | - | - |
-| [ai-performance](plugins/ai-performance/) | AI-powered performance optimization and bottleneck detection | `/performance-audit` | `performance-optimizer` | - |
+| [ai-performance](plugins/ai-performance/) | AI-powered performance optimization and bottleneck detection | `/performance-audit` | `performance-auditor` | `performance-auditing` |
 | [ai-plugins](plugins/ai-plugins/) | AI-powered plugin and skill scaffolding and generation tools | `/plugins-scaffold` | - | `skills-scaffold`, `plugins-scaffold` |
-| [ai-security](plugins/ai-security/) | AI-powered security auditing with reproducible reports | `/security-init`, `/security-audit` | `security-auditor` | - |
+| [ai-security](plugins/ai-security/) | AI-powered security auditing with reproducible reports | `/security-init`, `/security-audit` | `security-auditor` | `security-auditing` |
 
 > **📝 Note on Audit Plugins:** The `ai-accessibility`, `ai-security`, and `ai-performance` plugins are developer-focused code analysis tools designed to identify issues during development. They perform static code analysis and are meant to **complement** (not replace) runtime testing tools, professional services, and manual testing. Use these plugins to catch issues early in the development phase, then validate with specialized testing tools and services appropriate to your domain.
 

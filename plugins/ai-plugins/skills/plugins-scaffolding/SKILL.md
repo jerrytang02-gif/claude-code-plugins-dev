@@ -1,5 +1,5 @@
 ---
-name: Plugins Scaffold
+name: plugins-scaffolding
 description: Guide for creating Claude Code plugins with proper structure, metadata, and components. This skill should be used when creating plugins, writing manifests, or setting up marketplaces.
 ---
 
