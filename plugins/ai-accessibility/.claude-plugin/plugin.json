@@ -1,0 +1,20 @@
+{
+  "name": "ai-accessibility",
+  "version": "1.0.0",
+  "description": "AI-powered accessibility analysis - Interactive accessibility audit skill and automated agent with comprehensive WCAG compliance detection and reporting",
+  "author": {
+    "name": "Charles Jones",
+    "url": "https://charlesjones.dev"
+  },
+  "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev",
+  "license": "MIT",
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "wcag",
+    "compliance",
+    "auditing",
+    "inclusive-design",
+    "skills"
+  ]
+}

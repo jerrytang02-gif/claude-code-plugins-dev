@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2025-10-29
+
+### Added
+
+#### AI-Accessibility Plugin (v1.0.0)
+
+- `/accessibility-audit` command with WCAG 2.1/2.2 compliance checking
+  - Interactive configuration for WCAG version (2.1/2.2), conformance level (A/AA/AAA), and audit scope
+  - Comprehensive pattern detection: semantic HTML, ARIA, keyboard navigation, color contrast, forms, images, screen readers
+  - Timestamped reports with severity-based findings, WCAG compliance matrix, and code remediation examples
+  - Hybrid Agent + Skill architecture with `accessibility-auditor` agent and `accessibility-auditing` skill
+
+#### Marketplace Documentation
+
+- Added "Note on Audit Plugins" section clarifying audit plugins are developer-focused static code analysis tools
+- Emphasizes plugins complement (not replace) runtime testing tools and professional services
+
+### Changed
+
+#### AI-Security Plugin (v1.2.1)
+
+- Standardized audit plugin structure
+- Renamed skill from `security-audit` to `security-auditing`
+- Reduced command file complexity: 402→80 lines
+- Moved comprehensive report templates from command file to SKILL.md file (single source of truth)
+- Renamed skill to use 'auditing' suffix
+
+#### AI-Performance Plugin (v1.1.1)
+
+- Standardized audit plugin structure
+- Renamed agent from `performance-optimizer` to `performance-auditor`
+- Renamed skill from `performance-audit` to `performance-auditing`
+- Reduced command file complexity: 471→36 lines
+- Moved comprehensive report templates from command file to SKILL.md file (single source of truth)
+- Renamed skill to use 'auditing' suffix
+
 ## [1.4.1] - 2025-10-24
 
 ### Fixed

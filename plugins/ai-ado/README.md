@@ -738,7 +738,6 @@ Future commands and features planned for this plugin:
 ## 📦 Plugin Details
 
 - **Name:** AI-ADO Plugin
-- **Version:** 1.2.0
 - **Type:** AI Instruction Plugin (Slash Commands)
 - **Commands:** `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`, `/ado-log-story-work`, `/ado-timesheet-report`
 - **MCP Integration:** Microsoft Azure DevOps MCP Server (optional, OS-aware configuration)

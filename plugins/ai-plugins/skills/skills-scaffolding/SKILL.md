@@ -1,7 +1,6 @@
 ---
-name: Skills Scaffold
+name: skills-scaffolding
 description: Guide for creating effective Claude Code skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.
-version: 1.0.0
 ---
 
 # Skills Scaffold Skill
@@ -159,7 +158,6 @@ description: Work items  # Too short, no context, no third-person form
 ---
 name: Skill Name
 description: What it does and when to use it
-version: 1.0.0
 dependencies: python>=3.8, pandas>=1.5.0
 ---
 ```
@@ -573,7 +571,6 @@ Before finalizing a skill, verify:
 ---
 name: My Skill Name
 description: Brief description of what this skill does and when to use it (max 200 chars)
-version: 1.0.0
 dependencies: python>=3.8
 ---
 
@@ -663,7 +660,6 @@ mkdir -p skills/{skill-name}
 Create the YAML frontmatter:
 - Name: Clear, descriptive, max 64 chars
 - Description: What it does + when to use it, max 200 chars
-- Version: 1.0.0 (initial version)
 - Dependencies: List if any required
 
 ### Step 4: Write Core Content
