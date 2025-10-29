@@ -135,7 +135,6 @@ Features: README with examples, LICENSE file, Test command
 ## 📦 Plugin Details
 
 - **Name:** AI-Plugins
-- **Version:** 1.1.0
 - **Features:**
   - Commands: `/plugins-scaffold`
 - **License:** MIT

@@ -1,7 +1,6 @@
 ---
 name: Plugins Scaffold
 description: Guide for creating Claude Code plugins with proper structure, metadata, and components. This skill should be used when creating plugins, writing manifests, or setting up marketplaces.
-version: 1.0.0
 ---
 
 # Plugins Scaffold Skill
@@ -277,7 +276,6 @@ skills/
 ---
 name: Skill Name
 description: Guide for [topic]. This skill should be used when [specific use cases] (max 200 chars)
-version: 1.0.0
 ---
 
 # Skill Name Skill

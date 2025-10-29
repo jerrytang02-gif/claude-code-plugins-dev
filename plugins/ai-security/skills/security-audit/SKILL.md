@@ -1,7 +1,6 @@
 ---
 name: Security Audit
 description: Guide for conducting comprehensive security audits of code to identify vulnerabilities. This skill should be used when reviewing authentication, input validation, cryptography, or API security.
-version: 1.0.0
 ---
 
 # Security Audit Skill

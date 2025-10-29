@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "A curated list of custom Claude Code plugins, agents, and skills for developers.",
-    "version": "1.4.1",
+    "version": "1.5.0",
     "pluginRoot": "./plugins"
   },
   "plugins": [
@@ -25,6 +25,27 @@
         "productivity",
         "mcp",
         "integration"
+      ],
+      "author": {
+        "name": "Charles Jones",
+        "url": "https://charlesjones.dev"
+      },
+      "repository": "https://github.com/charlesjones-dev/claude-code-plugins-dev"
+    },
+    {
+      "name": "ai-accessibility",
+      "source": "./plugins/ai-accessibility",
+      "description": "AI-powered accessibility analysis - Interactive accessibility audit skill and automated agent with comprehensive WCAG compliance detection and reporting",
+      "version": "1.0.0",
+      "keywords": [
+        "ai",
+        "accessibility",
+        "a11y",
+        "wcag",
+        "compliance",
+        "auditing",
+        "inclusive-design",
+        "skills"
       ],
       "author": {
         "name": "Charles Jones",
@@ -57,7 +78,7 @@
       "name": "ai-performance",
       "source": "./plugins/ai-performance",
       "description": "AI-powered performance optimization - Interactive performance audit skill and automated agent with comprehensive bottleneck detection and optimization",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "keywords": [
         "ai",
         "performance",
@@ -98,7 +119,7 @@
       "name": "ai-security",
       "source": "./plugins/ai-security",
       "description": "AI-powered security auditing - Interactive security audit skill and automated agent with comprehensive vulnerability detection and reporting",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "keywords": [
         "ai",
         "security",

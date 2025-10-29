@@ -1,7 +1,6 @@
 ---
 name: Azure DevOps Work Items
 description: Guide for creating Azure DevOps work items (Features, User Stories, Tasks). This skill should be used when working with ADO MCP tools to create work items with proper hierarchy and formatting.
-version: 1.0.0
 dependencies: Azure DevOps MCP Server (@azure-devops/mcp)
 ---
 

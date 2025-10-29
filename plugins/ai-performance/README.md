@@ -8,6 +8,58 @@
 
 Provides a complete suite of AI-powered performance tools including commands, agents, and skills that help you build high-performance applications, detect bottlenecks, optimize resource usage, and maintain performance best practices throughout your development lifecycle.
 
+### 🔍 Important: What This Plugin Is (and Isn't)
+
+**This is a DEVELOPER-FOCUSED CODE ANALYSIS TOOL** designed to help developers with codebase access identify performance issues during development.
+
+#### ✅ What This Plugin IS:
+- **Static code analysis tool** for developers working with source code
+- **Performance anti-pattern detection** for N+1 queries, inefficient loops, blocking operations
+- **Developer education tool** with optimization guidance and code examples
+- **Complementary tool** to augment your performance workflow
+- **Early detection system** to catch performance issues before they reach production
+
+#### ❌ What This Plugin IS NOT:
+- **NOT a replacement for runtime performance monitoring** or Application Performance Monitoring (APM) platforms
+- **NOT a load testing tool** (doesn't execute code or simulate traffic)
+- **NOT a complete performance solution** (catches code-level issues, not infrastructure/runtime issues)
+- **NOT a substitute for profiling tools** that measure actual execution time
+- **NOT a replacement for real user monitoring (RUM)** or synthetic monitoring services
+- **NOT a browser performance testing tool** (doesn't measure Core Web Vitals in browsers)
+
+#### 🎯 How This Fits Into Your Performance Workflow:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│           Comprehensive Performance Strategy                │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  1. Development Phase (Code-Level) ← THIS PLUGIN           │
+│     • /performance-audit - Static code analysis            │
+│     • N+1 query and anti-pattern detection                 │
+│     • Early performance issue identification               │
+│                                                             │
+│  2. Profiling & Benchmarking                               │
+│     • CPU and memory profilers                             │
+│     • Database query analyzers                             │
+│     • Performance benchmarking tools                       │
+│                                                             │
+│  3. Runtime Performance Testing                            │
+│     • Load testing and stress testing                      │
+│     • Application Performance Monitoring (APM)             │
+│     • Real User Monitoring (RUM)                           │
+│     • Browser performance testing (Lighthouse, WebPageTest)│
+│                                                             │
+│  4. Production Monitoring                                  │
+│     • Continuous performance monitoring                    │
+│     • Alerting and anomaly detection                       │
+│     • Performance analytics and reporting                  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Best Practice**: Use this plugin during development to catch code-level performance issues early, then validate with profiling tools, load testing, and production monitoring.
+
 ### Why Use This Plugin?
 
 While you can manually review code for performance issues, this plugin provides structured, comprehensive performance analysis:
@@ -304,7 +356,6 @@ This timestamp-based naming ensures multiple audits on the same day don't overwr
 ## 📦 Plugin Details
 
 - **Name:** AI-Performance
-- **Version:** 1.0.0
 - **Type:** Comprehensive Performance Optimization Toolkit
 - **Features:**
   - Commands: `/performance-audit`

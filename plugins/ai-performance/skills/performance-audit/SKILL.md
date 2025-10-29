@@ -1,7 +1,6 @@
 ---
 name: Performance Audit
 description: Guide for analyzing and improving application performance including identifying bottlenecks, implementing caching, and optimizing queries. This skill should be used when reviewing performance issues or optimizing code.
-version: 1.0.0
 ---
 
 # Performance Audit Skill

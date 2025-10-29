@@ -7,6 +7,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2025-10-29
+
+### Added
+
+#### AI-Accessibility Plugin (v1.0.0)
+
+- `/accessibility-audit` command with `accessibility-auditor` agent and `Accessibility Audit` skill
+  - **WCAG 2.1 and 2.2 compliance checking** with configurable conformance levels (A, AA, AAA)
+  - **Interactive pre-audit configuration** - Select WCAG version, conformance level, and scope
+  - **Scoped analysis** - Audit entire codebase or specific directories/files
+  - **Comprehensive accessibility pattern detection**:
+    - Semantic HTML structure and heading hierarchy
+    - ARIA implementation and landmark regions
+    - Keyboard navigation and focus management
+    - Color contrast analysis for text and UI components
+    - Form labels, instructions, and error handling
+    - Alternative text for images and multimedia
+    - Interactive component accessibility (buttons, links, modals, widgets)
+    - Screen reader compatibility
+    - Touch target sizes and mobile accessibility
+  - **Timestamped audit reports** saved to `/docs/accessibility/{timestamp}-accessibility-audit.md`
+  - **Severity-based findings** (Critical, High, Medium, Low) with file paths and line numbers
+  - **WCAG compliance matrix** showing status for each applicable criterion
+  - **Code remediation examples** with before/after comparisons for every finding type
+  - **Prioritized remediation roadmap** (Phase 1-4) with effort estimates
+  - **Hybrid Agent + Skill Architecture** for optimal context efficiency
+  - **Includes "What This Plugin Is (and Isn't)" section** with workflow diagram
+
+#### Marketplace Documentation
+
+- **Added clarifying notices for audit plugins** to set proper expectations
+  - Added "Note on Audit Plugins" section in main README after Available Plugins table
+  - Clarifies that audit plugins (accessibility, security, performance) are developer-focused code analysis tools
+  - Emphasizes these plugins complement (not replace) runtime testing tools and professional services
+  - Provides guidance on proper workflow: early detection during development + validation with specialized tools
+
+### Changed
+
+#### AI-Security Plugin (v1.2.1)
+
+- **Updated README with clarifying notices**
+  - Added "What This Plugin Is (and Isn't)" section to set proper expectations
+  - Added 4-phase security workflow diagram showing plugin's role in comprehensive security strategy
+  - Clarifies plugin is for code-level analysis, complements (not replaces) runtime security tools and professional assessments
+
+#### AI-Performance Plugin (v1.1.1)
+
+- **Updated README with clarifying notices**
+  - Added "What This Plugin Is (and Isn't)" section to set proper expectations
+  - Added 4-phase performance workflow diagram showing plugin's role in comprehensive performance strategy
+  - Clarifies plugin is for code-level analysis, complements (not replaces) APM platforms, load testing, and production monitoring
+
 ## [1.4.1] - 2025-10-24
 
 ### Fixed

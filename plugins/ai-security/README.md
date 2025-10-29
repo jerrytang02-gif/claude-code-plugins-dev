@@ -8,6 +8,57 @@
 
 Provides a complete suite of AI-powered security tools including commands, agents, and skills that help you build secure applications, detect vulnerabilities, analyze threats, and maintain security best practices throughout your development lifecycle.
 
+### 🔍 Important: What This Plugin Is (and Isn't)
+
+**This is a DEVELOPER-FOCUSED CODE ANALYSIS TOOL** designed to help developers with codebase access identify security vulnerabilities during development.
+
+#### ✅ What This Plugin IS:
+- **Static code analysis tool** for developers working with source code
+- **Vulnerability pattern detection** for OWASP Top 10 and common security issues
+- **Developer education tool** with secure coding guidance and remediation examples
+- **Complementary tool** to augment your security workflow
+- **Early detection system** to catch vulnerabilities before they reach production
+
+#### ❌ What This Plugin IS NOT:
+- **NOT a replacement for runtime security monitoring** or application security platforms
+- **NOT a penetration testing tool** (doesn't actively exploit vulnerabilities)
+- **NOT a complete security solution** (catches code-level issues, not runtime/infrastructure issues)
+- **NOT a substitute for dependency scanners** like Snyk or Dependabot (limited dependency analysis)
+- **NOT a replacement for security audits** by professional security researchers
+- **NOT a compliance certification tool** (doesn't provide legal compliance guarantees)
+
+#### 🎯 How This Fits Into Your Security Workflow:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│           Comprehensive Security Strategy                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  1. Development Phase (Code-Level) ← THIS PLUGIN           │
+│     • /security-audit - Static code analysis               │
+│     • OWASP Top 10 pattern detection                       │
+│     • Early vulnerability identification                    │
+│                                                             │
+│  2. Dependency Security                                    │
+│     • Dependency scanning tools                            │
+│     • CVE monitoring services                              │
+│     • Software composition analysis                        │
+│                                                             │
+│  3. Runtime Security Testing                               │
+│     • Dynamic application security testing (DAST)          │
+│     • Runtime security monitoring                          │
+│     • Infrastructure security scanning                     │
+│                                                             │
+│  4. Professional Security Assessment                       │
+│     • Penetration testing by security professionals        │
+│     • Security audits and code reviews                     │
+│     • Compliance assessments                               │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Best Practice**: Use this plugin during development to catch code-level vulnerabilities early, then validate with dependency scanners, runtime security tools, and professional security assessments.
+
 ### Why Not Just Use `/security-review`?
 
 Claude Code ships with a native `/security-review` command that provides basic security analysis. However, it has limitations:
@@ -404,7 +455,6 @@ This timestamp-based naming ensures multiple audits on the same day don't overwr
 ## 📦 Plugin Details
 
 - **Name:** AI-Security
-- **Version:** 1.1.0
 - **Type:** Comprehensive Security Toolkit
 - **Features:**
   - Commands: `/security-init`, `/security-audit`
