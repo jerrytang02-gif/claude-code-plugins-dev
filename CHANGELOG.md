@@ -13,78 +13,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### AI-Accessibility Plugin (v1.0.0)
 
-- `/accessibility-audit` command with `accessibility-auditor` agent and `Accessibility Audit` skill
-  - **WCAG 2.1 and 2.2 compliance checking** with configurable conformance levels (A, AA, AAA)
-  - **Interactive pre-audit configuration** - Select WCAG version, conformance level, and scope
-  - **Scoped analysis** - Audit entire codebase or specific directories/files
-  - **Comprehensive accessibility pattern detection**:
-    - Semantic HTML structure and heading hierarchy
-    - ARIA implementation and landmark regions
-    - Keyboard navigation and focus management
-    - Color contrast analysis for text and UI components
-    - Form labels, instructions, and error handling
-    - Alternative text for images and multimedia
-    - Interactive component accessibility (buttons, links, modals, widgets)
-    - Screen reader compatibility
-    - Touch target sizes and mobile accessibility
-  - **Timestamped audit reports** saved to `/docs/accessibility/{timestamp}-accessibility-audit.md`
-  - **Severity-based findings** (Critical, High, Medium, Low) with file paths and line numbers
-  - **WCAG compliance matrix** showing status for each applicable criterion
-  - **Code remediation examples** with before/after comparisons for every finding type
-  - **Prioritized remediation roadmap** (Phase 1-4) with effort estimates
-  - **Hybrid Agent + Skill Architecture** for optimal context efficiency
-  - **Includes "What This Plugin Is (and Isn't)" section** with workflow diagram
+- `/accessibility-audit` command with WCAG 2.1/2.2 compliance checking
+  - Interactive configuration for WCAG version (2.1/2.2), conformance level (A/AA/AAA), and audit scope
+  - Comprehensive pattern detection: semantic HTML, ARIA, keyboard navigation, color contrast, forms, images, screen readers
+  - Timestamped reports with severity-based findings, WCAG compliance matrix, and code remediation examples
+  - Hybrid Agent + Skill architecture with `accessibility-auditor` agent and `accessibility-auditing` skill
 
 #### Marketplace Documentation
 
-- **Added clarifying notices for audit plugins** to set proper expectations
-  - Added "Note on Audit Plugins" section in main README after Available Plugins table
-  - Clarifies that audit plugins (accessibility, security, performance) are developer-focused code analysis tools
-  - Emphasizes these plugins complement (not replace) runtime testing tools and professional services
-  - Provides guidance on proper workflow: early detection during development + validation with specialized tools
+- Added "Note on Audit Plugins" section clarifying audit plugins are developer-focused static code analysis tools
+- Emphasizes plugins complement (not replace) runtime testing tools and professional services
 
 ### Changed
 
 #### AI-Security Plugin (v1.2.1)
 
-- **Updated README with clarifying notices**
-  - Added "What This Plugin Is (and Isn't)" section to set proper expectations
-  - Added 4-phase security workflow diagram showing plugin's role in comprehensive security strategy
-  - Clarifies plugin is for code-level analysis, complements (not replaces) runtime security tools and professional assessments
+- Standardized audit plugin structure
+- Renamed skill from `security-audit` to `security-auditing`
+- Reduced command file complexity: 402→80 lines
+- Moved comprehensive report templates from command file to SKILL.md file (single source of truth)
+- Renamed skill to use 'auditing' suffix
 
 #### AI-Performance Plugin (v1.1.1)
 
-- **Updated README with clarifying notices**
-  - Added "What This Plugin Is (and Isn't)" section to set proper expectations
-  - Added 4-phase performance workflow diagram showing plugin's role in comprehensive performance strategy
-  - Clarifies plugin is for code-level analysis, complements (not replaces) APM platforms, load testing, and production monitoring
-  - Renamed performance-optimizer agent to performance-auditor
-
-### Fixed
-
-#### AI-Security Plugin (v1.2.1)
-
-- **Fixed `/security-audit` command to properly use Task tool with subagent**
-  - Updated to use `Task tool with subagent_type "ai-security:security-auditor"` instead of generic reference
-  - Ensures security-auditor agent is correctly invoked during audit execution
-- **Added comprehensive report template to security-auditing SKILL.md**
-  - Added full template with all sections (Executive Summary, Security Findings, OWASP Compliance Analysis, etc.)
-  - Ensures audit reports follow proper format matching accessibility-audit standard
-- **Removed redundant template from security-audit command file**
-  - Eliminated template duplication by keeping single source of truth in SKILL.md
-  - Reduced command file from 402 to 80 lines for better maintainability
-
-#### AI-Performance Plugin (v1.1.1)
-
-- **Fixed `/performance-audit` command to properly use Task tool with subagent**
-  - Updated to use `Task tool with subagent_type "ai-performance:performance-auditor"` instead of generic reference
-  - Ensures performance-auditor agent is correctly invoked during audit execution
-- **Added comprehensive report template to performance-audit SKILL.md**
-  - Added full template with all sections (Executive Summary, Performance Findings, Optimization Priorities, etc.)
-  - Ensures audit reports follow proper format matching accessibility-audit standard
-- **Removed redundant template from performance-audit command file**
-  - Eliminated template duplication by keeping single source of truth in SKILL.md
-  - Reduced command file from 471 to 36 lines for better maintainability
+- Standardized audit plugin structure
+- Renamed agent from `performance-optimizer` to `performance-auditor`
+- Renamed skill from `performance-audit` to `performance-auditing`
+- Reduced command file complexity: 471→36 lines
+- Moved comprehensive report templates from command file to SKILL.md file (single source of truth)
+- Renamed skill to use 'auditing' suffix
 
 ## [1.4.1] - 2025-10-24
 
