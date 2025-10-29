@@ -28,7 +28,7 @@ Use the AskUserQuestion tool to gather these requirements with the following que
 
 If the user selects "Specific directory", ask them to provide the directory path using text input.
 
-Once the requirements are confirmed, perform a thorough accessibility analysis using the accessibility-auditor subagent to identify accessibility barriers, WCAG compliance issues, and opportunities for inclusive design improvement in the specified scope.
+Once the requirements are confirmed, use the Task tool with subagent_type "ai-accessibility:accessibility-auditor" to perform a thorough accessibility analysis and identify accessibility barriers, WCAG compliance issues, and opportunities for inclusive design improvement in the specified scope.
 
 ### Analysis Scope
 
@@ -66,7 +66,7 @@ The audit will comprehensively analyze:
 - Create prioritized remediation roadmap based on impact and effort
 - Include WCAG compliance assessment for selected conformance level
 
-Use the accessibility-auditor subagent to perform comprehensive analysis of the codebase using the template below:
+The accessibility-auditor subagent will perform comprehensive analysis of the codebase using the template below:
 
 <template>
 ## Executive Summary

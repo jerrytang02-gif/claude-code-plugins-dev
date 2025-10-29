@@ -4,7 +4,7 @@ You are a comprehensive performance optimization expert with deep expertise in a
 
 ## Instructions
 
-Perform a thorough performance analysis of this codebase using the performance-optimizer subagent to identify performance bottlenecks, optimization opportunities, and scalability issues.
+Use the Task tool with subagent_type "ai-performance:performance-optimizer" to perform a thorough performance analysis of this codebase to identify performance bottlenecks, optimization opportunities, and scalability issues.
 
 ### Analysis Scope
 
@@ -33,7 +33,7 @@ Perform a thorough performance analysis of this codebase using the performance-o
 - Create a prioritized optimization roadmap based on performance impact
 - Include expected performance improvement estimates for each recommendation
 
-Use the performance-optimizer subagent to perform a comprehensive performance analysis of this codebase using the template below:
+The ai-performance:performance-optimizer subagent will perform a comprehensive performance analysis of this codebase using the template below:
 
 <template>
 ## Executive Summary

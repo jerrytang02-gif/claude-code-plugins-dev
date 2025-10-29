@@ -48,7 +48,7 @@ Wait for user response. If user chooses to run `/security-init`, stop and tell t
 
 ### Security Analysis
 
-After verifying security configuration (or if user chooses to continue anyway), perform a thorough security analysis of this codebase using the security-auditor subagent to identify vulnerabilities, security anti-patterns, and compliance issues.
+After verifying security configuration (or if user chooses to continue anyway), use the Task tool with subagent_type "ai-security:security-auditor" to perform a thorough security analysis of this codebase to identify vulnerabilities, security anti-patterns, and compliance issues.
 
 ### Analysis Scope
 
@@ -77,7 +77,7 @@ After verifying security configuration (or if user chooses to continue anyway), 
 - Create a prioritized remediation roadmap based on risk severity
 - Include OWASP compliance assessment with specific gap analysis
 
-Use the security-auditor subagent to perform a comprehensive security analysis of this codebase using the template below:
+The ai-security:security-auditor subagent will perform a comprehensive security analysis of this codebase using the template below:
 
 <template>
 ## Executive Summary

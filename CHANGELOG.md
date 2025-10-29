@@ -59,6 +59,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added 4-phase performance workflow diagram showing plugin's role in comprehensive performance strategy
   - Clarifies plugin is for code-level analysis, complements (not replaces) APM platforms, load testing, and production monitoring
 
+### Fixed
+
+#### AI-Security Plugin (v1.2.1)
+
+- **Fixed `/security-audit` command to properly use Task tool with subagent**
+  - Updated to use `Task tool with subagent_type "ai-security:security-auditor"` instead of generic reference
+  - Ensures security-auditor agent is correctly invoked during audit execution
+
+#### AI-Performance Plugin (v1.1.1)
+
+- **Fixed `/performance-audit` command to properly use Task tool with subagent**
+  - Updated to use `Task tool with subagent_type "ai-performance:performance-optimizer"` instead of generic reference
+  - Ensures performance-optimizer agent is correctly invoked during audit execution
+
 ## [1.4.1] - 2025-10-24
 
 ### Fixed
