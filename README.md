@@ -16,8 +16,8 @@ This Claude Code plugin marketplace provides plugins that extend Claude Code's c
 
 | Plugin | Description | Commands | Agents | Skills |
 |--------|-------------|----------|--------|--------|
-| [ai-ado](plugins/ai-ado/) | AI-powered Azure DevOps integration with MCP support | `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`, `/ado-log-story-work`, `/ado-timesheet-report` | - | `ado-work-items` |
 | [ai-accessibility](plugins/ai-accessibility/) | AI-powered accessibility auditing with WCAG compliance | `/accessibility-audit` | `accessibility-auditor` | `accessibility-audit` |
+| [ai-ado](plugins/ai-ado/) | AI-powered Azure DevOps integration with MCP support | `/ado-init`, `/ado-create-feature`, `/ado-create-story`, `/ado-create-task`, `/ado-log-story-work`, `/ado-timesheet-report` | - | `ado-work-items` |
 | [ai-git](plugins/ai-git/) | AI-powered git automation and workflow streamlining | `/git-init`, `/git-commit-push` | - | - |
 | [ai-performance](plugins/ai-performance/) | AI-powered performance optimization and bottleneck detection | `/performance-audit` | `performance-optimizer` | - |
 | [ai-plugins](plugins/ai-plugins/) | AI-powered plugin and skill scaffolding and generation tools | `/plugins-scaffold` | - | `skills-scaffold`, `plugins-scaffold` |

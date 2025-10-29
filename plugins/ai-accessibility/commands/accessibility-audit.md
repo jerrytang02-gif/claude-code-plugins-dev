@@ -4,7 +4,31 @@ You are a comprehensive accessibility auditor with deep expertise in WCAG guidel
 
 ## Instructions
 
-Perform a thorough accessibility analysis of this codebase using the accessibility-auditor subagent to identify accessibility barriers, WCAG compliance issues, and opportunities for inclusive design improvement.
+Before starting the audit, determine the WCAG compliance requirements and audit scope by asking the user:
+
+1. **WCAG Version**: Which version to audit against (2.1, 2.2)
+2. **Conformance Level**: Which level to target (A, AA, AAA)
+3. **Audit Scope**: Whether to scan the entire solution or a specific directory
+
+Use the AskUserQuestion tool to gather these requirements with the following questions:
+
+- Question 1: "Which WCAG version should this audit target?"
+  - Options: WCAG 2.1, WCAG 2.2
+  - Header: "WCAG Version"
+
+- Question 2: "Which WCAG conformance level should be the target?"
+  - Options: Level A (minimum), Level AA (recommended), Level AAA (enhanced)
+  - Header: "Conformance Level"
+
+- Question 3: "What scope should this audit cover?"
+  - Options:
+    - "Entire solution" (scan all files in the current working directory)
+    - "Specific directory" (user will specify the path)
+  - Header: "Audit Scope"
+
+If the user selects "Specific directory", ask them to provide the directory path using text input.
+
+Once the requirements are confirmed, perform a thorough accessibility analysis using the accessibility-auditor subagent to identify accessibility barriers, WCAG compliance issues, and opportunities for inclusive design improvement in the specified scope.
 
 ### Analysis Scope
 
@@ -26,6 +50,10 @@ The audit will comprehensively analyze:
 - Save report to: `/docs/accessibility/{timestamp}-accessibility-audit.md`
   - Format: `YYYY-MM-DD-HHMMSS-accessibility-audit.md`
   - Example: `2025-10-29-143022-accessibility-audit.md`
+- Include audit configuration header specifying:
+  - WCAG version being audited against
+  - Target conformance level (A, AA, or AAA)
+  - Audit scope (entire solution or specific directory path)
 - Include actual findings with exact file paths and line numbers
 - Provide before/after code examples for remediation
 - Prioritize findings by severity: Critical, High, Medium, Low
